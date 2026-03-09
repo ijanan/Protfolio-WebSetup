@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ project.title }} — Portfolio{% endblock %}
+{% block meta_description %}{{ project.short_description }}{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'core:index' %}#projects">Projects</a></li>
+                <li class="breadcrumb-item active">{{ project.title }}</li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<section class="section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="project-detail-header" data-aos="fade-up">
+                    <span class="project-category-badge mb-3">{{ project.get_category_display }}</span>
+                    <h1 class="project-detail-title">{{ project.title }}</h1>
+                    <div class="project-tech-tags mt-3 mb-4">
+                        {% for tech in project.get_tech_list %}
+                        <span class="tech-tag">{{ tech }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                {% if project.image %}
+                <div class="project-detail-image mb-4" data-aos="fade-up">
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}" class="img-fluid rounded">
+                </div>
+                {% endif %}
+
+                <div class="project-detail-content" data-aos="fade-up">
+                    {{ project.full_description|linebreaksbr }}
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="project-sidebar" data-aos="fade-left">
+                    <h4>Project Info</h4>
+                    <ul class="project-info-list">
+                        <li><strong>Category:</strong> {{ project.get_category_display }}</li>
+                        <li><strong>Date:</strong> {{ project.created_at|date:"M Y" }}</li>
+                        <li><strong>Tech Stack:</strong> {{ project.tech_stack }}</li>
+                    </ul>
+                    <div class="project-links mt-3">
+                        {% if project.github_url %}
+                        <a href="{{ project.github_url }}" target="_blank" rel="noopener" class="btn btn-dark w-100 mb-2">
+                            <i class="fab fa-github me-2"></i>View on GitHub
+                        </a>
+                        {% endif %}
+                        {% if project.live_url %}
+                        <a href="{{ project.live_url }}" target="_blank" rel="noopener" class="btn btn-primary-custom w-100">
+                            <i class="fas fa-external-link-alt me-2"></i>Live Demo
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if related_projects %}
+                <div class="related-projects mt-4" data-aos="fade-left" data-aos-delay="200">
+                    <h4>Related Projects</h4>
+                    {% for rp in related_projects %}
+                    <a href="{% url 'core:project_detail' rp.slug %}" class="related-project-link">
+                        <div class="related-project-item">
+                            <h6>{{ rp.title }}</h6>
+                            <p>{{ rp.short_description|truncatewords:12 }}</p>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="{% url 'core:index' %}#projects" class="btn btn-outline-custom">
+                <i class="fas fa-arrow-left me-2"></i>Back to Projects
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

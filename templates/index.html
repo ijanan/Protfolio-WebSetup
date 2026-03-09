@@ -1,0 +1,459 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- ==================== HERO SECTION ==================== -->
+<section id="hero" class="hero-section">
+    <div class="hero-particles" id="particles"></div>
+    <div class="container">
+        <div class="row align-items-center min-vh-100">
+            <div class="col-lg-7" data-aos="fade-right" data-aos-duration="1000">
+                <p class="hero-greeting">Hello, I'm</p>
+                <h1 class="hero-name">{% if profile %}{{ profile.name }}{% else %}Istiak Jaman Anan{% endif %}</h1>
+                <h2 class="hero-title">
+                    <span id="typed-text"></span><span class="typed-cursor">|</span>
+                </h2>
+                <p class="hero-subtitle">
+                    {% if profile %}{{ profile.bio|truncatewords:30 }}{% else %}
+                    CSE Graduate passionate about turning data into insights and building elegant web solutions.
+                    {% endif %}
+                </p>
+                <div class="hero-buttons">
+                    <a href="{% url 'core:download_resume' %}" class="btn btn-primary-custom">
+                        <i class="fas fa-download me-2"></i>Download CV
+                    </a>
+                    <a href="#contact" class="btn btn-outline-custom">
+                        <i class="fas fa-paper-plane me-2"></i>Contact Me
+                    </a>
+                </div>
+                <div class="hero-social">
+                    {% if profile and profile.github_url %}
+                    <a href="{{ profile.github_url }}" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    {% endif %}
+                    {% if profile and profile.linkedin_url %}
+                    <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    {% endif %}
+                    {% if profile %}
+                    <a href="mailto:{{ profile.email }}" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-5 text-center" data-aos="fade-left" data-aos-duration="1000">
+                <div class="hero-image-wrapper">
+                    {% if profile and profile.photo %}
+                    <img src="{{ profile.photo.url }}" alt="{{ profile.name }}" class="hero-image">
+                    {% else %}
+                    <div class="hero-image-placeholder">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#about" class="scroll-indicator" aria-label="Scroll down">
+        <i class="fas fa-chevron-down"></i>
+    </a>
+</section>
+
+<!-- ==================== ABOUT SECTION ==================== -->
+<section id="about" class="section-padding">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <h2 class="section-title">About Me</h2>
+            <div class="section-divider"></div>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-lg-5 mb-4" data-aos="fade-right">
+                <div class="about-image-wrapper">
+                    {% if profile and profile.photo %}
+                    <img src="{{ profile.photo.url }}" alt="{{ profile.name }}" class="about-image">
+                    {% else %}
+                    <div class="about-image-placeholder">
+                        <i class="fas fa-code fa-3x"></i>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-7" data-aos="fade-left">
+                <h3 class="about-heading">
+                    {% if profile %}{{ profile.title }}{% else %}CSE Graduate | Data Analyst | Web Developer{% endif %}
+                </h3>
+                <div class="about-text">
+                    {% if profile %}
+                    <p>{{ profile.bio|linebreaksbr }}</p>
+                    {% else %}
+                    <p>I am a recent Computer Science and Engineering graduate with a passion for data analysis and web development. I love transforming complex data into meaningful insights and building elegant, user-friendly web applications.</p>
+                    {% endif %}
+                </div>
+                {% if profile and profile.academic_summary %}
+                <div class="about-academic-note mt-3">
+                    <div class="academic-note-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <p>{{ profile.academic_summary }}</p>
+                </div>
+                {% endif %}
+                <div class="about-info mt-4">
+                    <div class="row">
+                        {% if profile %}
+                        <div class="col-sm-6">
+                            <p><strong>Name:</strong> {{ profile.name }}</p>
+                            <p><strong>Email:</strong> {{ profile.email }}</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p><strong>Degree:</strong> B.Sc. in CSE</p>
+                            <p><strong>Location:</strong> Bangladesh</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== SKILLS SECTION ==================== -->
+<section id="skills" class="section-padding section-bg-alt">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <h2 class="section-title">My Skills</h2>
+            <div class="section-divider"></div>
+            <p class="section-subtitle">Technologies and tools I work with</p>
+        </div>
+        {% for category_name, skills_list in skill_categories.items %}
+        <div class="skill-category" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:forloop.counter0 }}00">
+            <h4 class="skill-category-title">
+                <i class="fas fa-layer-group me-2"></i>{{ category_name }}
+            </h4>
+            <div class="row">
+                {% for skill in skills_list %}
+                <div class="col-md-6 mb-3">
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name">
+                                {% if skill.icon_class %}<i class="{{ skill.icon_class }} me-2"></i>{% endif %}
+                                {{ skill.name }}
+                            </span>
+                            <span class="skill-percent">{{ skill.proficiency }}%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="{{ skill.proficiency }}"></div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center text-muted">Skills will be displayed here once added via the admin panel.</p>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ==================== TIMELINE SECTION ==================== -->
+<section id="timeline" class="section-padding">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <h2 class="section-title">Education & Experience</h2>
+            <div class="section-divider"></div>
+        </div>
+        <div class="timeline">
+            {% for edu in education %}
+            <div class="timeline-item {% if forloop.counter|divisibleby:2 %}timeline-right{% else %}timeline-left{% endif %}" data-aos="fade-{% if forloop.counter|divisibleby:2 %}left{% else %}right{% endif %}">
+                <div class="timeline-dot education-dot"><i class="fas fa-graduation-cap"></i></div>
+                <div class="timeline-content">
+                    <span class="timeline-badge badge-education">Education</span>
+                    <h4>{{ edu.degree }}</h4>
+                    <h5>{{ edu.institution }}</h5>
+                    <p class="timeline-field">{{ edu.field_of_study }}</p>
+                    <span class="timeline-date">
+                        <i class="fas fa-calendar-alt me-1"></i>
+                        {{ edu.start_date|date:"M Y" }} — {% if edu.is_current %}Present{% elif edu.end_date %}{{ edu.end_date|date:"M Y" }}{% endif %}
+                    </span>
+                    {% if edu.gpa %}<p class="timeline-gpa"><strong>GPA:</strong> {{ edu.gpa }}</p>{% endif %}
+                    {% if edu.description %}<p class="mt-2">{{ edu.description }}</p>{% endif %}
+                </div>
+            </div>
+            {% endfor %}
+
+            {% for exp in experience %}
+            <div class="timeline-item {% if forloop.counter|divisibleby:2 %}timeline-left{% else %}timeline-right{% endif %}" data-aos="fade-{% if forloop.counter|divisibleby:2 %}right{% else %}left{% endif %}">
+                <div class="timeline-dot experience-dot"><i class="fas fa-briefcase"></i></div>
+                <div class="timeline-content">
+                    <span class="timeline-badge badge-experience">Experience</span>
+                    <h4>{{ exp.role }}</h4>
+                    <h5>{{ exp.company }}</h5>
+                    <span class="timeline-date">
+                        <i class="fas fa-calendar-alt me-1"></i>
+                        {{ exp.start_date|date:"M Y" }} — {% if exp.is_current %}Present{% elif exp.end_date %}{{ exp.end_date|date:"M Y" }}{% endif %}
+                    </span>
+                    <p class="mt-2">{{ exp.description|linebreaksbr }}</p>
+                </div>
+            </div>
+            {% endfor %}
+
+            {% if not education and not experience %}
+            <p class="text-center text-muted">Timeline entries will appear here once added via the admin panel.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- ==================== PROJECTS SECTION ==================== -->
+<section id="projects" class="section-padding section-bg-alt">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <h2 class="section-title">My Projects</h2>
+            <div class="section-divider"></div>
+            <p class="section-subtitle">A selection of my recent work</p>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="project-filters text-center mb-5" data-aos="fade-up">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="data">Data Analysis</button>
+            <button class="filter-btn" data-filter="web">Web Development</button>
+            <button class="filter-btn" data-filter="ml">Machine Learning</button>
+            <button class="filter-btn" data-filter="other">Other</button>
+        </div>
+
+        <div class="row" id="projectGrid">
+            {% for project in projects %}
+            <div class="col-lg-4 col-md-6 mb-4 project-card-wrapper" data-category="{{ project.category }}" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:forloop.counter0 }}0">
+                <div class="project-card">
+                    <div class="project-card-image">
+                        {% if project.image %}
+                        <img src="{{ project.image.url }}" alt="{{ project.title }}" loading="lazy">
+                        {% else %}
+                        <div class="project-placeholder-image">
+                            <i class="fas fa-project-diagram fa-3x"></i>
+                        </div>
+                        {% endif %}
+                        <div class="project-card-overlay">
+                            <a href="{% url 'core:project_detail' project.slug %}" class="btn btn-sm btn-light"><i class="fas fa-eye me-1"></i>Details</a>
+                            {% if project.github_url %}
+                            <a href="{{ project.github_url }}" target="_blank" rel="noopener" class="btn btn-sm btn-dark"><i class="fab fa-github me-1"></i>Code</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="project-card-body">
+                        <span class="project-category-badge">{{ project.get_category_display }}</span>
+                        <h5 class="project-card-title">{{ project.title }}</h5>
+                        <p class="project-card-text">{{ project.short_description }}</p>
+                        <div class="project-tech-tags">
+                            {% for tech in project.get_tech_list %}
+                            <span class="tech-tag">{{ tech }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <p class="text-center text-muted">Projects will be displayed here once added via the admin panel.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ==================== CERTIFICATES SECTION ==================== -->
+<section id="certificates" class="section-padding">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <h2 class="section-title">Certificates</h2>
+            <div class="section-divider"></div>
+        </div>
+        <div class="row">
+            {% for cert in certificates %}
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+                <div class="certificate-card">
+                    {% if cert.image %}
+                    <div class="certificate-image">
+                        <img src="{{ cert.image.url }}" alt="{{ cert.title }}" loading="lazy">
+                    </div>
+                    {% endif %}
+                    <div class="certificate-body">
+                        <h5>{{ cert.title }}</h5>
+                        <p class="certificate-issuer"><i class="fas fa-award me-1"></i>{{ cert.issuer }}</p>
+                        <p class="certificate-date"><i class="fas fa-calendar me-1"></i>{{ cert.date|date:"M Y" }}</p>
+                        {% if cert.credential_url %}
+                        <a href="{{ cert.credential_url }}" target="_blank" rel="noopener" class="btn btn-sm btn-outline-custom">
+                            <i class="fas fa-external-link-alt me-1"></i>View Credential
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <p class="text-center text-muted">Certificates will be displayed here once added via the admin panel.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ==================== ACADEMIC SECTION ==================== -->
+<section id="academic" class="section-padding section-bg-alt">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <h2 class="section-title">Academic Goals</h2>
+            <div class="section-divider"></div>
+            <p class="section-subtitle">My aspirations for higher education and research</p>
+        </div>
+        {% for goal in academic_goals %}
+        <div class="academic-card" data-aos="fade-up">
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <h4><i class="fas fa-bullseye me-2 text-accent"></i>Target Program</h4>
+                    <p class="academic-degree">{{ goal.target_degree }}</p>
+
+                    {% if goal.target_countries %}
+                    <h5 class="mt-4"><i class="fas fa-globe-americas me-2 text-accent"></i>Target Countries</h5>
+                    <div class="academic-countries">
+                        {% for country in goal.get_countries_list %}
+                        <span class="country-tag">{{ country }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <h4><i class="fas fa-flask me-2 text-accent"></i>Research Interests</h4>
+                    <p>{{ goal.research_interests|linebreaksbr }}</p>
+                </div>
+            </div>
+            {% if goal.achievements %}
+            <div class="mt-3">
+                <h4><i class="fas fa-trophy me-2 text-accent"></i>Academic Achievements</h4>
+                <p>{{ goal.achievements|linebreaksbr }}</p>
+            </div>
+            {% endif %}
+            {% if goal.statement_summary %}
+            <div class="mt-3">
+                <h4><i class="fas fa-file-alt me-2 text-accent"></i>Statement Summary</h4>
+                <p>{{ goal.statement_summary|linebreaksbr }}</p>
+            </div>
+            {% endif %}
+        </div>
+        {% empty %}
+        <p class="text-center text-muted">Academic goals will be displayed here once added via the admin panel.</p>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ==================== BLOG PREVIEW ==================== -->
+{% if blog_posts %}
+<section id="blog" class="section-padding">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <h2 class="section-title">Latest Blog Posts</h2>
+            <div class="section-divider"></div>
+        </div>
+        <div class="row">
+            {% for post in blog_posts %}
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+                <div class="blog-card">
+                    {% if post.image %}
+                    <div class="blog-card-image">
+                        <img src="{{ post.image.url }}" alt="{{ post.title }}" loading="lazy">
+                    </div>
+                    {% endif %}
+                    <div class="blog-card-body">
+                        <span class="blog-date"><i class="fas fa-calendar me-1"></i>{{ post.published_date|date:"M d, Y" }}</span>
+                        <h5>{{ post.title }}</h5>
+                        <p>{{ post.excerpt|default:post.content|truncatewords:20 }}</p>
+                        <a href="{% url 'core:blog_detail' post.slug %}" class="read-more-link">
+                            Read More <i class="fas fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-3">
+            <a href="{% url 'core:blog_list' %}" class="btn btn-outline-custom">View All Posts</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- ==================== CONTACT SECTION ==================== -->
+<section id="contact" class="section-padding section-bg-alt">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="section-divider"></div>
+            <p class="section-subtitle">Have a question or want to work together? Drop me a message!</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-5 mb-4" data-aos="fade-right">
+                <div class="contact-info-card">
+                    <div class="contact-info-item">
+                        <div class="contact-info-icon"><i class="fas fa-envelope"></i></div>
+                        <div>
+                            <h5>Email</h5>
+                            <p>{% if profile %}{{ profile.email }}{% else %}your.email@example.com{% endif %}</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <div class="contact-info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div>
+                            <h5>Location</h5>
+                            <p>Bangladesh</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <div class="contact-info-icon"><i class="fas fa-globe"></i></div>
+                        <div>
+                            <h5>Availability</h5>
+                            <p>Open for opportunities</p>
+                        </div>
+                    </div>
+                    <div class="contact-social mt-4">
+                        {% if profile and profile.github_url %}
+                        <a href="{{ profile.github_url }}" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+                        {% endif %}
+                        {% if profile and profile.linkedin_url %}
+                        <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
+                        {% endif %}
+                        {% if profile %}
+                        <a href="mailto:{{ profile.email }}"><i class="fas fa-envelope"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7" data-aos="fade-left">
+                <form id="contactForm" method="post" action="{% url 'core:contact_submit' %}">
+                    {% csrf_token %}
+                    {{ contact_form.website }}
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {{ contact_form.name }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {{ contact_form.email }}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        {{ contact_form.subject }}
+                    </div>
+                    <div class="mb-3">
+                        {{ contact_form.message }}
+                    </div>
+                    <button type="submit" class="btn btn-primary-custom w-100" id="contactSubmitBtn">
+                        <i class="fas fa-paper-plane me-2"></i>Send Message
+                    </button>
+                    <div id="contactAlert" class="mt-3" style="display:none;"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Typing text data for JS -->
+<script>
+    window.typingTexts = {{ typing_texts|safe }};
+</script>
+
+{% endblock %}

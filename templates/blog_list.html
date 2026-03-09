@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Blog — Portfolio{% endblock %}
+{% block meta_description %}Blog posts by Istiak Jaman Anan on data analysis, web development, and technology.{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1 class="page-header-title">Blog</h1>
+        <p class="page-header-subtitle">Thoughts, tutorials, and insights</p>
+    </div>
+</section>
+
+<section class="section-padding">
+    <div class="container">
+        <div class="row">
+            {% for post in posts %}
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+                <div class="blog-card">
+                    {% if post.image %}
+                    <div class="blog-card-image">
+                        <img src="{{ post.image.url }}" alt="{{ post.title }}" loading="lazy">
+                    </div>
+                    {% endif %}
+                    <div class="blog-card-body">
+                        <span class="blog-date"><i class="fas fa-calendar me-1"></i>{{ post.published_date|date:"M d, Y" }}</span>
+                        <h5>{{ post.title }}</h5>
+                        <p>{{ post.excerpt|default:post.content|truncatewords:25 }}</p>
+                        <a href="{% url 'core:blog_detail' post.slug %}" class="read-more-link">
+                            Read More <i class="fas fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <p class="text-center text-muted py-5">No blog posts yet. Check back soon!</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if posts.has_other_pages %}
+        <nav class="mt-5">
+            <ul class="pagination justify-content-center">
+                {% if posts.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ posts.previous_page_number }}">&laquo; Previous</a></li>
+                {% endif %}
+                {% for num in posts.paginator.page_range %}
+                <li class="page-item {% if posts.number == num %}active{% endif %}">
+                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+                {% endfor %}
+                {% if posts.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ posts.next_page_number }}">Next &raquo;</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
