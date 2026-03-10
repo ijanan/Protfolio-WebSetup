@@ -44,9 +44,7 @@
                     {% if profile and profile.photo %}
                     <img src="{{ profile.photo.url }}" alt="{{ profile.name }}" class="hero-image">
                     {% else %}
-                    <div class="hero-image-placeholder">
-                        <i class="fas fa-user"></i>
-                    </div>
+                    <img src="{% static 'images/Profile.png' %}" alt="Istiak Jaman Anan" class="hero-image">
                     {% endif %}
                 </div>
             </div>
@@ -70,9 +68,7 @@
                     {% if profile and profile.photo %}
                     <img src="{{ profile.photo.url }}" alt="{{ profile.name }}" class="about-image">
                     {% else %}
-                    <div class="about-image-placeholder">
-                        <i class="fas fa-code fa-3x"></i>
-                    </div>
+                    <img src="{% static 'images/Profile.png' %}" alt="Istiak Jaman Anan" class="about-image">
                     {% endif %}
                 </div>
             </div>
