@@ -12,6 +12,7 @@ class Profile(models.Model):
     resume = models.FileField(upload_to='resume/', blank=True)
     github_url = models.URLField(blank=True)
     linkedin_url = models.URLField(blank=True)
+    telegram_url = models.URLField(blank=True)
     email = models.EmailField()
     typing_texts = models.CharField(
         max_length=500, blank=True,
