@@ -101,6 +101,12 @@ class Project(models.Model):
     tech_stack = models.CharField(max_length=500, help_text="Comma-separated, e.g. 'Python, Django, PostgreSQL'")
     github_url = models.URLField(blank=True)
     live_url = models.URLField(blank=True)
+    github_repo_id = models.BigIntegerField(
+        blank=True,
+        null=True,
+        unique=True,
+        help_text="GitHub repository ID for auto-synced projects (optional).",
+    )
     featured = models.BooleanField(default=False)
     order = models.PositiveIntegerField(default=0)
     created_at = models.DateField(auto_now_add=True)

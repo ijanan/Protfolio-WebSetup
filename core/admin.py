@@ -32,7 +32,7 @@ class ExperienceAdmin(admin.ModelAdmin):
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'featured', 'order', 'created_at')
+    list_display = ('title', 'category', 'featured', 'order', 'created_at', 'github_repo_id')
     list_filter = ('category', 'featured')
     list_editable = ('featured', 'order')
     prepopulated_fields = {'slug': ('title',)}
