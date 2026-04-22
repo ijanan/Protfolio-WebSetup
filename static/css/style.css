@@ -243,12 +243,13 @@ img {
    Hero Section
    ======================================== */
 .hero-section {
-    min-height: 100vh;
+    min-height: 88vh;
     background: var(--hero-gradient);
     position: relative;
     display: flex;
     align-items: center;
     overflow: hidden;
+    padding: 6.5rem 0 4.5rem;
 }
 
 .hero-glow {
@@ -305,7 +306,7 @@ img {
 }
 
 .hero-copy {
-    max-width: 540px;
+    max-width: 620px;
 }
 
 .hero-pill {
@@ -343,14 +344,14 @@ img {
 }
 
 .hero-name {
-    font-size: 3.6rem;
+    font-size: 4rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
     line-height: 1.2;
 }
 
 .hero-title {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     color: var(--text-secondary);
     font-weight: 400;
     min-height: 2.5rem;
@@ -368,7 +369,7 @@ img {
 }
 
 .hero-subtitle {
-    font-size: 1.05rem;
+    font-size: 1.12rem;
     color: var(--text-secondary);
     margin: 1.5rem 0;
     max-width: 500px;
@@ -416,8 +417,8 @@ img {
 
 .hero-image-wrapper {
     position: relative;
-    width: 360px;
-    height: 360px;
+    width: 380px;
+    height: 380px;
     aspect-ratio: 1 / 1;
     margin: 0 auto;
     border-radius: 50%;
@@ -438,7 +439,7 @@ img {
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
-    object-position: center 20%;
+    object-position: center 10%;
     display: block;
     transition: transform 0.4s ease;
 }
@@ -555,6 +556,64 @@ img {
     box-shadow: var(--shadow-md);
     margin: 0;
     overflow: hidden;
+}
+
+.about-highlights {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.highlight-card {
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(15, 118, 110, 0.18);
+    border-radius: 16px;
+    padding: 1.1rem 1.2rem;
+    box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .highlight-card {
+    background: rgba(15, 23, 42, 0.65);
+    border-color: rgba(56, 189, 248, 0.2);
+}
+
+.highlight-card h4 {
+    font-size: 1rem;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+}
+
+.highlight-card p {
+    color: var(--text-secondary);
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.about-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.8rem;
+}
+
+.metric-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 0.9rem 0.8rem;
+    text-align: center;
+}
+
+.metric-value {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.metric-label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-muted);
 }
 
 .about-image-wrapper:hover .about-image {
@@ -1664,7 +1723,7 @@ img {
    ======================================== */
 @media (max-width: 991.98px) {
     .hero-name {
-        font-size: 2.5rem;
+        font-size: 2.9rem;
     }
 
     .hero-image-wrapper,
@@ -1674,9 +1733,8 @@ img {
         margin-top: 2rem;
     }
 
-    .about-image-wrapper {
-        width: 260px;
-        height: 260px;
+    .about-metrics {
+        grid-template-columns: 1fr 1fr;
     }
 
     .timeline::before {
@@ -1710,17 +1768,21 @@ img {
 
 @media (max-width: 575.98px) {
     .hero-name {
-        font-size: 2rem;
+        font-size: 2.3rem;
     }
 
     .hero-title {
-        font-size: 1.2rem;
+        font-size: 1.35rem;
     }
 
     .hero-image-wrapper,
     .hero-image-placeholder {
         width: 220px;
         height: 220px;
+    }
+
+    .about-metrics {
+        grid-template-columns: 1fr;
     }
 
     .about-panel,

@@ -30,7 +30,12 @@ def index(request):
         'blog_posts': BlogPost.objects.filter(is_published=True)[:3],
         'academic_goals': AcademicGoal.objects.all(),
         'contact_form': ContactForm(),
-        'typing_texts': json.dumps(profile.get_typing_list()) if profile else '[]',
+        'typing_texts': json.dumps(profile.get_typing_list()) if profile else json.dumps([
+            'A Student',
+            'A Learner',
+            'Data Analyst',
+            'Web Developer',
+        ]),
     }
     return render(request, 'index.html', context)
 
