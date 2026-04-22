@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initTypingAnimation();
     initSkillBars();
     initProjectFilter();
+    initProjectsCarousel();
     initContactForm();
     initBackToTop();
     initSmoothScroll();
@@ -183,32 +184,99 @@ function initProjectFilter() {
     var cards = document.querySelectorAll('.project-card-wrapper');
     if (!filterBtns.length || !cards.length) return;
 
+    var viewport = document.getElementById('projectsViewport');
+
+    // Initialize state for consistent transitions
+    cards.forEach(function (card) {
+        card.classList.add('show');
+        card.classList.remove('hidden');
+        card.style.display = '';
+        card.setAttribute('aria-hidden', 'false');
+    });
+
+    filterBtns.forEach(function (btn) {
+        btn.setAttribute('aria-pressed', btn.classList.contains('active') ? 'true' : 'false');
+    });
+
     filterBtns.forEach(function (btn) {
         btn.addEventListener('click', function () {
             // Update active button
             filterBtns.forEach(function (b) { b.classList.remove('active'); });
             btn.classList.add('active');
 
-            var filter = btn.getAttribute('data-filter');
+            filterBtns.forEach(function (b) {
+                b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+            });
+
+            var filter = (btn.getAttribute('data-filter') || 'all').trim().toLowerCase();
 
             cards.forEach(function (card) {
-                var category = card.getAttribute('data-category');
+                if (card._hideTimer) {
+                    clearTimeout(card._hideTimer);
+                    card._hideTimer = null;
+                }
+
+                var category = (card.getAttribute('data-category') || '').trim().toLowerCase();
+                if (!category) category = 'other';
+
                 if (filter === 'all' || category === filter) {
-                    card.classList.remove('hidden');
-                    card.classList.add('show');
                     card.style.display = '';
+                    requestAnimationFrame(function () {
+                        card.classList.remove('hidden');
+                        card.classList.add('show');
+                    });
+
+                    // AOS may leave elements at opacity:0; ensure visible when filtering
+                    card.classList.add('aos-animate');
+                    card.setAttribute('aria-hidden', 'false');
                 } else {
                     card.classList.add('hidden');
                     card.classList.remove('show');
-                    // Delay hiding to allow animation
-                    setTimeout(function () {
+                    card.setAttribute('aria-hidden', 'true');
+                    card._hideTimer = setTimeout(function () {
                         if (card.classList.contains('hidden')) {
                             card.style.display = 'none';
                         }
-                    }, 400);
+                    }, 230);
                 }
             });
+
+            if (viewport) {
+                viewport.scrollTo({ left: 0, behavior: 'smooth' });
+            }
+
+            if (window.AOS && typeof window.AOS.refresh === 'function') {
+                window.AOS.refresh();
+            }
         });
+    });
+}
+
+/* ========================================
+   Projects Carousel (Left/Right Nav)
+   ======================================== */
+function initProjectsCarousel() {
+    var viewport = document.getElementById('projectsViewport');
+    var prev = document.getElementById('projectsPrev');
+    var next = document.getElementById('projectsNext');
+    if (!viewport || !prev || !next) return;
+
+    function getScrollAmount() {
+        // Scroll about one card width (fallback to viewport width)
+        var card = viewport.querySelector('.project-card-wrapper:not([style*="display: none"])');
+        if (card) {
+            var rect = card.getBoundingClientRect();
+            return Math.max(260, Math.round(rect.width + 20));
+        }
+        return Math.max(260, Math.round(viewport.clientWidth * 0.85));
+    }
+
+    prev.addEventListener('click', function () {
+        viewport.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+    });
+
+    next.addEventListener('click', function () {
+        viewport.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
     });
 }
 

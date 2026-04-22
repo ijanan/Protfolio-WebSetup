@@ -153,59 +153,81 @@
 </section>
 
 <!-- ==================== PROJECTS SECTION ==================== -->
-<section id="projects" class="section-padding">
+<section id="projects" class="section-padding projects-showcase">
     <div class="container">
-        <div class="section-header" data-aos="fade-up">
-            <h2 class="section-title">My Projects</h2>
-            <div class="section-divider"></div>
-            <p class="section-subtitle">A selection of my recent work</p>
+        <div class="projects-showcase-header" data-aos="fade-up">
+            <h2 class="projects-showcase-title">
+                <span class="projects-title-deco">+</span>
+                Projects Showcase
+                <span class="projects-title-deco">+</span>
+            </h2>
+            <p class="section-subtitle">Browse by category and explore code.</p>
         </div>
 
-        <!-- Filter Buttons -->
-        <div class="project-filters text-center mb-5" data-aos="fade-up">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="data">Data Analysis</button>
-            <button class="filter-btn" data-filter="web">Web Development</button>
-            <button class="filter-btn" data-filter="ml">Machine Learning</button>
-            <button class="filter-btn" data-filter="other">Other</button>
+        <div class="projects-toolbar" data-aos="fade-up">
+            <div class="project-filters" role="group" aria-label="Project categories">
+                <button class="filter-btn active" data-filter="all" type="button">All</button>
+                <button class="filter-btn" data-filter="data" type="button">Data Analysis</button>
+                <button class="filter-btn" data-filter="web" type="button">Web Development</button>
+                <button class="filter-btn" data-filter="ml" type="button">Machine Learning</button>
+                <button class="filter-btn" data-filter="other" type="button">Other</button>
+            </div>
         </div>
 
-        <div class="row" id="projectGrid">
-            {% for project in projects %}
-            <div class="col-lg-4 col-md-6 mb-4 project-card-wrapper" data-category="{{ project.category }}" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:forloop.counter0 }}0">
-                <div class="project-card">
-                    <div class="project-card-image">
-                        {% if project.image %}
-                        <img src="{{ project.image.url }}" alt="{{ project.title }}" loading="lazy">
-                        {% else %}
-                        <div class="project-placeholder-image">
-                            <i class="fas fa-project-diagram fa-3x"></i>
-                        </div>
-                        {% endif %}
-                        <div class="project-card-overlay">
-                            <a href="{% url 'core:project_detail' project.slug %}" class="btn btn-sm btn-light"><i class="fas fa-eye me-1"></i>Details</a>
-                            {% if project.github_url %}
-                            <a href="{{ project.github_url }}" target="_blank" rel="noopener" class="btn btn-sm btn-dark"><i class="fab fa-github me-1"></i>Code</a>
+        <div class="projects-carousel" aria-label="Projects carousel">
+            <button class="projects-nav-btn projects-nav-btn-prev" type="button" id="projectsPrev" aria-label="Previous projects">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <div class="projects-viewport" id="projectsViewport">
+                <div class="projects-track" id="projectGrid">
+                {% for project in projects %}
+                <div class="project-card-wrapper show" data-category="{{ project.category|default:'other'|lower }}">
+                    <div class="project-card">
+                        <div class="project-card-image">
+                            {% if project.image %}
+                            <img src="{{ project.image.url }}" alt="{{ project.title }}" loading="lazy">
+                            {% else %}
+                            <div class="project-placeholder-image">
+                                <i class="fas fa-project-diagram fa-3x"></i>
+                            </div>
                             {% endif %}
+                            <div class="project-card-overlay">
+                                <a href="{% url 'core:project_detail' project.slug %}" class="btn btn-sm btn-light"><i class="fas fa-eye me-1"></i>Details</a>
+                                {% if project.github_url %}
+                                <a href="{{ project.github_url }}" target="_blank" rel="noopener" class="btn btn-sm btn-dark"><i class="fab fa-github me-1"></i>Code</a>
+                                {% endif %}
+                            </div>
                         </div>
-                    </div>
-                    <div class="project-card-body">
-                        <span class="project-category-badge">{{ project.get_category_display }}</span>
-                        <h5 class="project-card-title">{{ project.title }}</h5>
-                        <p class="project-card-text">{{ project.short_description }}</p>
-                        <div class="project-tech-tags">
-                            {% for tech in project.get_tech_list %}
-                            <span class="tech-tag">{{ tech }}</span>
-                            {% endfor %}
+                        <div class="project-card-body">
+                            <span class="project-category-badge">{{ project.get_category_display }}</span>
+                            <h5 class="project-card-title">{{ project.title }}</h5>
+                            <p class="project-card-text">{{ project.short_description }}</p>
+                            <div class="project-tech-tags">
+                                {% for tech in project.get_tech_list %}
+                                <span class="tech-tag">{{ tech }}</span>
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                 </div>
+                {% empty %}
+                <div class="projects-empty">
+                    <p class="text-center text-muted">Projects will be displayed here once added via the admin panel.</p>
+                </div>
+                {% endfor %}
+                </div>
             </div>
-            {% empty %}
-            <div class="col-12">
-                <p class="text-center text-muted">Projects will be displayed here once added via the admin panel.</p>
-            </div>
-            {% endfor %}
+
+            <button class="projects-nav-btn projects-nav-btn-next" type="button" id="projectsNext" aria-label="Next projects">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{% url 'core:project_list' %}" class="btn btn-primary-custom">
+                View all projects <i class="fas fa-arrow-right ms-2"></i>
+            </a>
         </div>
     </div>
 </section>

@@ -44,6 +44,15 @@ def project_detail(request, slug):
     })
 
 
+def project_list(request):
+    profile = Profile.objects.first()
+    projects_qs = Project.objects.all().order_by('-created_at')
+    paginator = Paginator(projects_qs, 9)
+    page = request.GET.get('page')
+    projects = paginator.get_page(page)
+    return render(request, 'projects_list.html', {'projects': projects, 'profile': profile})
+
+
 def blog_list(request):
     posts = BlogPost.objects.filter(is_published=True)
     paginator = Paginator(posts, 6)

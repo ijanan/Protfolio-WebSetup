@@ -679,18 +679,65 @@ img {
 /* ========================================
    Projects Section
    ======================================== */
+.projects-showcase {
+    padding: 4.5rem 0;
+    background: var(--bg-secondary);
+}
+
+.projects-showcase .container {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: 2.5rem 2.25rem;
+    box-shadow: var(--shadow-md);
+}
+
+.projects-showcase-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.projects-showcase-title {
+    font-size: 2.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.projects-title-deco {
+    color: var(--accent);
+    margin: 0 0.4rem;
+}
+
+.projects-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+}
+
 .project-filters {
     display: flex;
-    justify-content: center;
-    gap: 0.5rem;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.35rem;
     flex-wrap: wrap;
+    width: fit-content;
+    max-width: 100%;
+    padding: 0.45rem;
+    border-radius: 999px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    margin: 0 auto;
 }
 
 .filter-btn {
     background: transparent;
-    border: 2px solid var(--border-color);
+    border: 1px solid transparent;
     color: var(--text-secondary);
-    padding: 0.4rem 1.2rem;
+    padding: 0.45rem 1.05rem;
     border-radius: 50px;
     font-weight: 500;
     cursor: pointer;
@@ -698,11 +745,107 @@ img {
     font-size: 0.9rem;
 }
 
+.filter-btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px var(--accent-light);
+}
+
 .filter-btn:hover,
 .filter-btn.active {
     background: var(--accent);
     border-color: var(--accent);
     color: #fff;
+}
+
+.projects-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.projects-nav-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.projects-carousel {
+    position: relative;
+}
+
+.projects-carousel .projects-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+.projects-nav-btn-prev {
+    left: 10px;
+}
+
+.projects-nav-btn-next {
+    right: 10px;
+}
+
+.projects-nav-btn:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+}
+
+.projects-carousel .projects-nav-btn:hover {
+    transform: translateY(-50%) translateY(-2px);
+}
+
+.projects-viewport {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.35rem 3.25rem 0.65rem;
+    scrollbar-width: none;
+}
+
+.projects-viewport::-webkit-scrollbar {
+    display: none;
+}
+
+.projects-track {
+    display: flex;
+    gap: 1.25rem;
+    align-items: stretch;
+}
+
+.projects-empty {
+    width: 100%;
+}
+
+.project-card-wrapper {
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+    width: clamp(280px, 30vw, 340px);
+    max-width: 85vw;
+    transition: opacity 0.22s ease, transform 0.22s ease;
+    will-change: opacity, transform;
+}
+
+.project-card-wrapper.hidden {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+    pointer-events: none;
+}
+
+.project-card-wrapper.show {
+    opacity: 1;
+    transform: none;
 }
 
 .project-card {
@@ -713,17 +856,51 @@ img {
     transition: all 0.3s ease;
     height: 100%;
     border: 1px solid var(--border-color);
+    position: relative;
 }
 
 .project-card:hover {
     transform: translateY(-8px);
     box-shadow: var(--shadow-lg);
+    border-color: var(--accent);
 }
 
 .project-card-image {
     position: relative;
-    height: 200px;
+    height: 185px;
     overflow: hidden;
+}
+
+@media (max-width: 991px) {
+    .projects-showcase .container {
+        padding: 2rem 1.25rem;
+    }
+
+    .projects-nav-btn-prev {
+        left: -8px;
+    }
+
+    .projects-nav-btn-next {
+        right: -8px;
+    }
+}
+
+@media (max-width: 575px) {
+    .projects-carousel {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .projects-carousel .projects-nav-btn {
+        position: static;
+        transform: none;
+    }
+
+    .projects-carousel .projects-nav-btn:hover {
+        transform: translateY(-2px);
+    }
 }
 
 .project-card-image img {
@@ -760,6 +937,8 @@ img {
     gap: 0.5rem;
     opacity: 0;
     transition: opacity 0.3s ease;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
 
 .project-card:hover .project-card-overlay {
@@ -785,12 +964,18 @@ img {
 .project-card-title {
     font-size: 1.1rem;
     margin: 0.6rem 0 0.4rem;
+    line-height: 1.35;
 }
 
 .project-card-text {
     color: var(--text-secondary);
     font-size: 0.9rem;
     margin-bottom: 0.8rem;
+    display: -webkit-box;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .project-tech-tags {
@@ -806,10 +991,21 @@ img {
     border-radius: 6px;
     font-size: 0.78rem;
     font-weight: 500;
+    border: 1px solid var(--border-color);
 }
 
 [data-theme="dark"] .tech-tag {
     background: var(--border-color);
+}
+
+@media (max-width: 991px) {
+    .projects-toolbar {
+        justify-content: center;
+    }
+
+    .project-filters {
+        justify-content: center;
+    }
 }
 
 /* ========================================
@@ -1384,18 +1580,16 @@ img {
    Utility: Fade-in for filtered projects
    ======================================== */
 .project-card-wrapper {
-    transition: opacity 0.4s ease, transform 0.4s ease;
+    transition: opacity 0.22s ease, transform 0.22s ease;
 }
 
 .project-card-wrapper.hidden {
     opacity: 0;
-    transform: scale(0.8);
-    position: absolute;
+    transform: translateY(10px) scale(0.98);
     pointer-events: none;
 }
 
 .project-card-wrapper.show {
     opacity: 1;
-    transform: scale(1);
-    position: relative;
+    transform: none;
 }

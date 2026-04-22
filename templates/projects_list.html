@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Projects — Portfolio{% endblock %}
+{% block meta_description %}All projects by {% if profile %}{{ profile.name }}{% else %}the portfolio owner{% endif %}.{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1 class="page-header-title">Projects</h1>
+        <p class="page-header-subtitle">Explore all projects</p>
+    </div>
+</section>
+
+<section class="section-padding">
+    <div class="container">
+        <div class="row">
+            {% for project in projects %}
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+                <div class="project-card">
+                    <div class="project-card-image">
+                        {% if project.image %}
+                        <img src="{{ project.image.url }}" alt="{{ project.title }}" loading="lazy">
+                        {% else %}
+                        <div class="project-placeholder-image">
+                            <i class="fas fa-project-diagram fa-3x"></i>
+                        </div>
+                        {% endif %}
+                        <div class="project-card-overlay">
+                            <a href="{% url 'core:project_detail' project.slug %}" class="btn btn-sm btn-light"><i class="fas fa-eye me-1"></i>Details</a>
+                            {% if project.github_url %}
+                            <a href="{{ project.github_url }}" target="_blank" rel="noopener" class="btn btn-sm btn-dark"><i class="fab fa-github me-1"></i>Code</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="project-card-body">
+                        <span class="project-category-badge">{{ project.get_category_display }}</span>
+                        <h5 class="project-card-title">{{ project.title }}</h5>
+                        <p class="project-card-text">{{ project.short_description }}</p>
+                        <div class="project-tech-tags">
+                            {% for tech in project.get_tech_list %}
+                            <span class="tech-tag">{{ tech }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <p class="text-center text-muted py-5">No projects yet. Add some from the admin panel.</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if projects.has_other_pages %}
+        <nav class="mt-5">
+            <ul class="pagination justify-content-center">
+                {% if projects.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ projects.previous_page_number }}">&laquo; Previous</a></li>
+                {% endif %}
+                {% for num in projects.paginator.page_range %}
+                <li class="page-item {% if projects.number == num %}active{% endif %}">
+                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+                {% endfor %}
+                {% if projects.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ projects.next_page_number }}">Next &raquo;</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+
+        <div class="text-center mt-4">
+            <a href="{% url 'core:index' %}#projects" class="btn btn-outline-custom">
+                <i class="fas fa-arrow-left me-2"></i>Back to Home
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
