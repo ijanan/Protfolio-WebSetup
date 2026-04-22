@@ -417,12 +417,14 @@ img {
 .hero-image-wrapper {
     position: relative;
     width: 360px;
-    height: 420px;
+    height: 360px;
+    aspect-ratio: 1 / 1;
     margin: 0 auto;
-    border-radius: 26px;
+    border-radius: 50%;
     overflow: hidden;
-    border: 1px solid rgba(15, 118, 110, 0.25);
-    box-shadow: 0 0 0 6px rgba(15, 118, 110, 0.1), var(--shadow-lg);
+    border: 2px solid rgba(15, 118, 110, 0.25);
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 0 6px rgba(15, 118, 110, 0.12), var(--shadow-lg);
     transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
@@ -434,9 +436,9 @@ img {
 .hero-image {
     width: 100%;
     height: 100%;
-    border-radius: 26px;
+    border-radius: 50%;
     object-fit: cover;
-    object-position: center top;
+    object-position: center 20%;
     display: block;
     transition: transform 0.4s ease;
 }
@@ -519,12 +521,14 @@ img {
 .about-image-wrapper {
     position: relative;
     width: 320px;
-    height: 400px;
+    height: 320px;
+    aspect-ratio: 1 / 1;
     margin: 0 auto;
-    border-radius: 24px;
+    border-radius: 50%;
     overflow: hidden;
-    border: 1px solid rgba(15, 118, 110, 0.25);
-    box-shadow: 0 0 0 6px rgba(15, 118, 110, 0.1), var(--shadow-lg);
+    border: 2px solid rgba(15, 118, 110, 0.25);
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 0 6px rgba(15, 118, 110, 0.12), var(--shadow-lg);
     transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
@@ -536,9 +540,9 @@ img {
 .about-image {
     width: 100%;
     height: 100%;
-    border-radius: 24px;
+    border-radius: 50%;
     object-fit: cover;
-    object-position: center top;
+    object-position: center 20%;
     display: block;
     transition: transform 0.4s ease;
 }
@@ -1666,13 +1670,13 @@ img {
     .hero-image-wrapper,
     .hero-image-placeholder {
         width: 260px;
-        height: 320px;
+        height: 260px;
         margin-top: 2rem;
     }
 
     .about-image-wrapper {
         width: 260px;
-        height: 320px;
+        height: 260px;
     }
 
     .timeline::before {
@@ -1716,7 +1720,7 @@ img {
     .hero-image-wrapper,
     .hero-image-placeholder {
         width: 220px;
-        height: 280px;
+        height: 220px;
     }
 
     .about-panel,
