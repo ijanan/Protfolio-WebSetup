@@ -80,8 +80,8 @@ function initNavbar() {
         link.addEventListener('click', function () {
             var collapse = document.getElementById('navbarNav');
             if (collapse && collapse.classList.contains('show')) {
-                var bsCollapse = bootstrap.Collapse.getInstance(collapse);
-                if (bsCollapse) bsCollapse.hide();
+                var bsCollapse = bootstrap.Collapse.getOrCreateInstance(collapse);
+                bsCollapse.hide();
             }
         });
     });
@@ -261,6 +261,16 @@ function initProjectsCarousel() {
     var next = document.getElementById('projectsNext');
     if (!viewport || !prev || !next) return;
 
+    function updateNavState() {
+        var maxScrollLeft = viewport.scrollWidth - viewport.clientWidth;
+        var atStart = viewport.scrollLeft <= 2;
+        var atEnd = viewport.scrollLeft >= maxScrollLeft - 2;
+        prev.disabled = atStart;
+        next.disabled = atEnd;
+        prev.classList.toggle('disabled', atStart);
+        next.classList.toggle('disabled', atEnd);
+    }
+
     function getScrollAmount() {
         // Scroll about one card width (fallback to viewport width)
         var card = viewport.querySelector('.project-card-wrapper:not([style*="display: none"])');
@@ -278,6 +288,48 @@ function initProjectsCarousel() {
     next.addEventListener('click', function () {
         viewport.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
     });
+
+    // Drag / grab to scroll (desktop + touch)
+    var isPointerDown = false;
+    var startX = 0;
+    var startScrollLeft = 0;
+
+    viewport.addEventListener('pointerdown', function (e) {
+        // Only primary button for mouse
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        isPointerDown = true;
+        startX = e.clientX;
+        startScrollLeft = viewport.scrollLeft;
+        viewport.setPointerCapture(e.pointerId);
+        viewport.classList.add('is-dragging');
+    });
+
+    viewport.addEventListener('pointermove', function (e) {
+        if (!isPointerDown) return;
+        var delta = e.clientX - startX;
+        viewport.scrollLeft = startScrollLeft - delta;
+    });
+
+    function endDrag(e) {
+        if (!isPointerDown) return;
+        isPointerDown = false;
+        viewport.classList.remove('is-dragging');
+        try {
+            viewport.releasePointerCapture(e.pointerId);
+        } catch (_) {
+            // ignore
+        }
+        updateNavState();
+    }
+
+    viewport.addEventListener('pointerup', endDrag);
+    viewport.addEventListener('pointercancel', endDrag);
+
+    viewport.addEventListener('scroll', function () {
+        updateNavState();
+    }, { passive: true });
+
+    updateNavState();
 }
 
 /* ========================================
@@ -366,16 +418,30 @@ function initSmoothScroll() {
     document.querySelectorAll('a[href*="#"]').forEach(function (anchor) {
         anchor.addEventListener('click', function (e) {
             var href = this.getAttribute('href');
-            // Only handle same-page hash links
-            if (href.startsWith('#') || (href.includes('#') && href.split('#')[0] === '')) {
-                var targetId = href.split('#')[1];
-                if (!targetId) return;
-                var target = document.getElementById(targetId);
-                if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
+            if (!href || !href.includes('#')) return;
+
+            // Resolve to an absolute URL to check if it's the current page
+            var url;
+            try {
+                url = new URL(href, window.location.href);
+            } catch (_) {
+                return;
             }
+
+            var current = new URL(window.location.href);
+            var sameOrigin = url.origin === current.origin;
+            var normalizePath = function (p) { return (p || '').replace(/\/+$/, '') || '/'; };
+            var samePath = normalizePath(url.pathname) === normalizePath(current.pathname);
+
+            if (!sameOrigin || !samePath) return;
+
+            var targetId = (url.hash || '').replace('#', '');
+            if (!targetId) return;
+            var target = document.getElementById(targetId);
+            if (!target) return;
+
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth' });
         });
     });
 }

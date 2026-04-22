@@ -31,6 +31,8 @@
 </head>
 <body>
 
+    <a class="skip-link" href="#mainContent">Skip to content</a>
+
     <!-- ========== NAVBAR ========== -->
     <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
         <div class="container">
@@ -44,6 +46,7 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="{% url 'core:index' %}#hero">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'core:index' %}#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'core:index' %}#highlights">Snapshot</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'core:index' %}#timeline">Education</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'core:index' %}#projects">Projects</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'core:index' %}#skills">Skills</a></li>
@@ -52,6 +55,9 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'core:blog_list' %}">Blog</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'core:index' %}#contact">Contact</a></li>
                 </ul>
+                <a class="btn btn-primary-custom btn-nav-cta ms-lg-3 mt-3 mt-lg-0" href="{% url 'core:index' %}#contact" aria-label="Jump to contact section">
+                    Let’s talk
+                </a>
                 <button class="btn btn-theme-toggle ms-3" id="themeToggle" aria-label="Toggle dark/light mode">
                     <i class="fas fa-moon" id="themeIcon"></i>
                 </button>
@@ -60,7 +66,7 @@
     </nav>
 
     <!-- ========== MAIN CONTENT ========== -->
-    <main>
+    <main id="mainContent">
         {% block content %}{% endblock %}
     </main>
 
@@ -85,11 +91,13 @@
                 </div>
                 <div class="col-md-4 mb-3">
                     <h5>Connect</h5>
+                    {% with p=profile|default:site_profile %}
                     <div class="social-links">
-                        <a href="#" id="footer-github" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                        <a href="#" id="footer-linkedin" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" id="footer-email" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                        <a href="{% if p and p.github_url %}{{ p.github_url }}{% else %}#{% endif %}" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="{% if p and p.linkedin_url %}{{ p.linkedin_url }}{% else %}#{% endif %}" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="{% if p and p.email %}mailto:{{ p.email }}{% else %}#{% endif %}" aria-label="Email"><i class="fas fa-envelope"></i></a>
                     </div>
+                    {% endwith %}
                 </div>
             </div>
             <hr>
