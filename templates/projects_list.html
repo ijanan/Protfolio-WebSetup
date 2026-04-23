@@ -14,9 +14,21 @@
 
 <section class="section-padding">
     <div class="container">
-        <div class="row">
+        <div class="projects-toolbar mb-4" data-aos="fade-up">
+            <div class="project-filters" role="group" aria-label="Project categories">
+                <button class="filter-btn active" data-filter="all" type="button">All</button>
+                <button class="filter-btn" data-filter="data" type="button">Data Analysis</button>
+                <button class="filter-btn" data-filter="web" type="button">Web Development</button>
+                <button class="filter-btn" data-filter="app" type="button">App Development</button>
+                <button class="filter-btn" data-filter="ml" type="button">Machine Learning</button>
+                <button class="filter-btn" data-filter="programming" type="button">Programming</button>
+                <button class="filter-btn" data-filter="other" type="button">Other</button>
+            </div>
+        </div>
+
+        <div class="row projects-list-grid">
             {% for project in projects %}
-            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+            <div class="col-lg-4 col-md-6 mb-4 project-card-wrapper show" data-category="{{ project.category|default:'other'|lower }}" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
                 <div class="project-card">
                     <div class="project-card-image">
                         {% if project.image %}
