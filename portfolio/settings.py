@@ -21,7 +21,11 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'dev-only-q1tbkv9*%1s25)&@7z(c+
 
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+raw_allowed_hosts = os.environ.get(
+    'DJANGO_ALLOWED_HOSTS',
+    'localhost,127.0.0.1,anan31.pythonanywhere.com,www.anan31.pythonanywhere.com'
+)
+ALLOWED_HOSTS = [host.strip().rstrip('.') for host in raw_allowed_hosts.split(',') if host.strip()]
 
 
 # Application definition
