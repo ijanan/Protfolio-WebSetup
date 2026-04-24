@@ -1,8 +1,19 @@
+from django import forms
 from django.contrib import admin
 from .models import (
     Profile, Skill, Education, Experience, Project,
     Certificate, BlogPost, AcademicGoal, ContactMessage,
 )
+
+
+class ProjectAdminForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['category'].choices = Project.CATEGORY_CHOICES
 
 
 @admin.register(Profile)
@@ -32,6 +43,7 @@ class ExperienceAdmin(admin.ModelAdmin):
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
+    form = ProjectAdminForm
     list_display = ('title', 'category', 'featured', 'order', 'created_at', 'github_repo_id')
     list_filter = ('category', 'featured')
     list_editable = ('featured', 'order')
