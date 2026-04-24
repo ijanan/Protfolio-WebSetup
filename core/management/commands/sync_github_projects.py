@@ -20,7 +20,9 @@ def _infer_category(repo: dict, default_category: str) -> str:
     Heuristic-based to keep it simple and explainable:
     - ML: ML/AI keywords or common ML libraries.
     - Data: analysis/visualization/dashboard keywords or data-focused languages.
+    - App: mobile/app keywords and ecosystems.
     - Web: web frameworks/front-end languages/keywords.
+    - Programming: algorithm/problem-solving/CLI utilities.
     - Otherwise: default_category.
     """
 
@@ -84,6 +86,22 @@ def _infer_category(repo: dict, default_category: str) -> str:
     ):
         return "data"
 
+    # App Development
+    if (
+        has_any(
+            "android",
+            "ios",
+            "flutter",
+            "react native",
+            "kotlin",
+            "swift",
+            "mobile app",
+            "app development",
+        )
+        or language in {"kotlin", "swift", "dart"}
+    ):
+        return "app"
+
     # Web Development
     if (
         has_any(
@@ -111,6 +129,20 @@ def _infer_category(repo: dict, default_category: str) -> str:
         or language in {"javascript", "typescript", "html", "css"}
     ):
         return "web"
+
+    # Programming / DSA / utilities
+    if has_any(
+        "algorithm",
+        "data structure",
+        "dsa",
+        "competitive programming",
+        "problem solving",
+        "coding challenge",
+        "cli",
+        "script",
+        "automation",
+    ):
+        return "programming"
 
     return default_category
 
