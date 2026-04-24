@@ -89,7 +89,9 @@ class Project(models.Model):
     CATEGORY_CHOICES = [
         ('data', 'Data Analysis'),
         ('web', 'Web Development'),
+        ('app', 'App Development'),
         ('ml', 'Machine Learning'),
+        ('programming', 'Programming'),
         ('other', 'Other'),
     ]
     title = models.CharField(max_length=200)
