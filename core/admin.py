@@ -16,6 +16,19 @@ class ProjectAdminForm(forms.ModelForm):
         self.fields['category'].choices = Project.CATEGORY_CHOICES
 
 
+class ProjectCategoryFilter(admin.SimpleListFilter):
+    title = 'category'
+    parameter_name = 'category'
+
+    def lookups(self, request, model_admin):
+        return Project.CATEGORY_CHOICES
+
+    def queryset(self, request, queryset):
+        if self.value():
+            return queryset.filter(category=self.value())
+        return queryset
+
+
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('name', 'title', 'email')
@@ -45,7 +58,7 @@ class ExperienceAdmin(admin.ModelAdmin):
 class ProjectAdmin(admin.ModelAdmin):
     form = ProjectAdminForm
     list_display = ('title', 'category', 'featured', 'order', 'created_at', 'github_repo_id')
-    list_filter = ('category', 'featured')
+    list_filter = (ProjectCategoryFilter, 'featured')
     list_editable = ('featured', 'order')
     prepopulated_fields = {'slug': ('title',)}
     search_fields = ('title', 'short_description', 'tech_stack')
