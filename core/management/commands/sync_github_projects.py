@@ -84,6 +84,41 @@ def _infer_category(repo: dict, default_category: str) -> str:
     ):
         return "data"
 
+    # App Development
+    if (
+        has_any(
+            "android",
+            "ios",
+            "flutter",
+            "react native",
+            "kotlin",
+            "swift",
+            "mobile app",
+            "app development",
+        )
+        or language in {"kotlin", "swift", "dart"}
+    ):
+        return "app"
+
+    # Programming
+    if (
+        has_any(
+            "algorithm",
+            "data structure",
+            "competitive programming",
+            "problem solving",
+            "leetcode",
+            "codeforces",
+            "hackerrank",
+        )
+        or language in {"c", "c++", "java", "go", "rust"}
+    ):
+        return "programming"
+
+    # Tools & Frameworks
+    if has_any("automation", "devops", "ci/cd", "docker", "kubernetes", "terraform", "ansible"):
+        return "tools"
+
     # Web Development
     if (
         has_any(
