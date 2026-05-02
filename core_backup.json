@@ -1,0 +1,267 @@
+[
+{
+  "model": "core.skill",
+  "pk": 1,
+  "fields": {
+    "name": "Excel",
+    "category": "data",
+    "proficiency": 40,
+    "icon_class": "",
+    "order": 0
+  }
+},
+{
+  "model": "core.education",
+  "pk": 1,
+  "fields": {
+    "institution": "Daffodil International University",
+    "degree": "B. Sc. in Computer Science and Engineering",
+    "field_of_study": "Sciences and Engineering",
+    "start_date": "2022-01-11",
+    "end_date": "2026-01-14",
+    "gpa": "",
+    "description": "",
+    "is_current": false
+  }
+},
+{
+  "model": "core.experience",
+  "pk": 1,
+  "fields": {
+    "company": "Self Employee",
+    "role": "Project Manager",
+    "start_date": "2023-06-01",
+    "end_date": null,
+    "description": "I am working on a paid project, which can include various types, such as web design and development or Flutter-based apps.",
+    "is_current": true
+  }
+},
+{
+  "model": "core.project",
+  "pk": 1,
+  "fields": {
+    "title": "CNN Models",
+    "slug": "cnn-models",
+    "short_description": "No description provided.",
+    "full_description": "No description provided.",
+    "category": "ml",
+    "image": "",
+    "tech_stack": "Jupyter Notebook",
+    "github_url": "https://github.com/ijanan/CNN_Models",
+    "live_url": "",
+    "github_repo_id": 1216225129,
+    "featured": false,
+    "order": 0,
+    "created_at": "2026-04-22"
+  }
+},
+{
+  "model": "core.project",
+  "pk": 2,
+  "fields": {
+    "title": "ECommerceSite Python Django",
+    "slug": "ecommercesite-python-django",
+    "short_description": "No description provided.",
+    "full_description": "No description provided.",
+    "category": "web",
+    "image": "",
+    "tech_stack": "Python",
+    "github_url": "https://github.com/ijanan/ECommerceSite-Python-Django",
+    "live_url": "",
+    "github_repo_id": 1167401207,
+    "featured": false,
+    "order": 0,
+    "created_at": "2026-04-22"
+  }
+},
+{
+  "model": "core.project",
+  "pk": 3,
+  "fields": {
+    "title": "MediContact Hospital Connect App",
+    "slug": "medicontact-hospital-connect-app",
+    "short_description": "No description provided.",
+    "full_description": "No description provided.",
+    "category": "other",
+    "image": "",
+    "tech_stack": "Dart",
+    "github_url": "https://github.com/ijanan/MediContact_Hospital_Connect_App",
+    "live_url": "",
+    "github_repo_id": 967713845,
+    "featured": false,
+    "order": 0,
+    "created_at": "2026-04-22"
+  }
+},
+{
+  "model": "core.project",
+  "pk": 4,
+  "fields": {
+    "title": "leaf disease detection app",
+    "slug": "leaf-disease-detection-app",
+    "short_description": "No description provided.",
+    "full_description": "No description provided.",
+    "category": "other",
+    "image": "",
+    "tech_stack": "Dart",
+    "github_url": "https://github.com/ijanan/leaf_disease_detection_app",
+    "live_url": "",
+    "github_repo_id": 1084408180,
+    "featured": false,
+    "order": 0,
+    "created_at": "2026-04-22"
+  }
+},
+{
+  "model": "core.project",
+  "pk": 5,
+  "fields": {
+    "title": "Protfolio WebSetup",
+    "slug": "protfolio-websetup",
+    "short_description": "No description provided.",
+    "full_description": "No description provided.",
+    "category": "web",
+    "image": "",
+    "tech_stack": "HTML",
+    "github_url": "https://github.com/ijanan/Protfolio-WebSetup",
+    "live_url": "",
+    "github_repo_id": 1177055260,
+    "featured": false,
+    "order": 0,
+    "created_at": "2026-04-22"
+  }
+},
+{
+  "model": "core.project",
+  "pk": 6,
+  "fields": {
+    "title": "Research",
+    "slug": "research",
+    "short_description": "No description provided.",
+    "full_description": "No description provided.",
+    "category": "other",
+    "image": "",
+    "tech_stack": "Dart",
+    "github_url": "https://github.com/ijanan/Research-",
+    "live_url": "",
+    "github_repo_id": 1083791127,
+    "featured": false,
+    "order": 0,
+    "created_at": "2026-04-22"
+  }
+},
+{
+  "model": "core.project",
+  "pk": 7,
+  "fields": {
+    "title": "lab task1",
+    "slug": "lab-task1",
+    "short_description": "No description provided.",
+    "full_description": "No description provided.",
+    "category": "other",
+    "image": "",
+    "tech_stack": "HTML",
+    "github_url": "https://github.com/ijanan/lab-task1",
+    "live_url": "",
+    "github_repo_id": 1003475088,
+    "featured": false,
+    "order": 0,
+    "created_at": "2026-04-22"
+  }
+},
+{
+  "model": "core.project",
+  "pk": 8,
+  "fields": {
+    "title": "web engineering practice",
+    "slug": "web-engineering-practice",
+    "short_description": "No description provided.",
+    "full_description": "No description provided.",
+    "category": "web",
+    "image": "",
+    "tech_stack": "HTML",
+    "github_url": "https://github.com/ijanan/web_engineering_practice",
+    "live_url": "",
+    "github_repo_id": 991149359,
+    "featured": false,
+    "order": 0,
+    "created_at": "2026-04-22"
+  }
+},
+{
+  "model": "core.project",
+  "pk": 9,
+  "fields": {
+    "title": "LeetCode Problem Solving",
+    "slug": "leetcode-problem-solving",
+    "short_description": "No description provided.",
+    "full_description": "No description provided.",
+    "category": "other",
+    "image": "",
+    "tech_stack": "GitHub",
+    "github_url": "https://github.com/ijanan/LeetCode-Problem-Solving",
+    "live_url": "",
+    "github_repo_id": 928340904,
+    "featured": false,
+    "order": 0,
+    "created_at": "2026-04-22"
+  }
+},
+{
+  "model": "core.project",
+  "pk": 10,
+  "fields": {
+    "title": "Compiler Design",
+    "slug": "compiler-design",
+    "short_description": "No description provided.",
+    "full_description": "No description provided.",
+    "category": "other",
+    "image": "",
+    "tech_stack": "C",
+    "github_url": "https://github.com/ijanan/-Compiler_Design",
+    "live_url": "",
+    "github_repo_id": 919330730,
+    "featured": false,
+    "order": 0,
+    "created_at": "2026-04-22"
+  }
+},
+{
+  "model": "core.project",
+  "pk": 11,
+  "fields": {
+    "title": "URI Problem Solutions",
+    "slug": "uri-problem-solutions",
+    "short_description": "No description provided.",
+    "full_description": "No description provided.",
+    "category": "other",
+    "image": "",
+    "tech_stack": "GitHub",
+    "github_url": "https://github.com/ijanan/URI-Problem-Solutions",
+    "live_url": "",
+    "github_repo_id": 529282746,
+    "featured": false,
+    "order": 0,
+    "created_at": "2026-04-22"
+  }
+},
+{
+  "model": "core.project",
+  "pk": 12,
+  "fields": {
+    "title": "Protfolio",
+    "slug": "protfolio",
+    "short_description": "No description provided.",
+    "full_description": "No description provided.",
+    "category": "web",
+    "image": "",
+    "tech_stack": "HTML",
+    "github_url": "https://github.com/ijanan/Protfolio",
+    "live_url": "",
+    "github_repo_id": 425238283,
+    "featured": false,
+    "order": 0,
+    "created_at": "2026-04-22"
+  }
+}
+]
