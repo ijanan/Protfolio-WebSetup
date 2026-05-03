@@ -25,7 +25,7 @@ def index(request):
         'skill_categories': skill_categories,
         'education': Education.objects.all(),
         'experience': Experience.objects.all(),
-        'projects': Project.objects.all(),
+        'projects': Project.objects.prefetch_related('gallery_images').all(),
         'certificates': Certificate.objects.all(),
         'blog_posts': BlogPost.objects.filter(is_published=True)[:3],
         'academic_goals': AcademicGoal.objects.all(),
@@ -41,17 +41,20 @@ def index(request):
 
 
 def project_detail(request, slug):
-    project = get_object_or_404(Project, slug=slug)
-    related = Project.objects.filter(category=project.category).exclude(pk=project.pk)[:3]
+    project = get_object_or_404(Project.objects.prefetch_related('gallery_images'), slug=slug)
+    related = Project.objects.prefetch_related('gallery_images').filter(category=project.category).exclude(pk=project.pk)[:3]
     return render(request, 'project_detail.html', {
         'project': project,
+        'cover_image': project.get_cover_image(),
+        'gallery_images': project.get_gallery_images(),
+        'tech_list': project.get_tech_list(),
         'related_projects': related,
     })
 
 
 def project_list(request):
     profile = Profile.objects.first()
-    projects_qs = Project.objects.all().order_by('-created_at')
+    projects_qs = Project.objects.prefetch_related('gallery_images').all().order_by('-created_at')
     paginator = Paginator(projects_qs, 9)
     page = request.GET.get('page')
     projects = paginator.get_page(page)

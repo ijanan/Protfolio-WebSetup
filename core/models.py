@@ -119,6 +119,19 @@ class Project(models.Model):
     def __str__(self):
         return self.title
 
+    def get_cover_image(self):
+        if self.image:
+            return self.image
+
+        first_gallery_image = self.gallery_images.first()
+        if first_gallery_image:
+            return first_gallery_image.image
+
+        return None
+
+    def get_gallery_images(self):
+        return self.gallery_images.all()
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
@@ -126,6 +139,23 @@ class Project(models.Model):
 
     def get_tech_list(self):
         return [t.strip() for t in self.tech_stack.split(',')]
+
+
+class ProjectImage(models.Model):
+    project = models.ForeignKey(Project, related_name='gallery_images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='projects/gallery/')
+    caption = models.CharField(max_length=200, blank=True)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order', 'id']
+        verbose_name = 'Project Image'
+        verbose_name_plural = 'Project Images'
+
+    def __str__(self):
+        if self.caption:
+            return f'{self.project.title} - {self.caption}'
+        return f'{self.project.title} - Image {self.pk or self.order}'
 
 
 class Certificate(models.Model):

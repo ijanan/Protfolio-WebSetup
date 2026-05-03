@@ -5,68 +5,153 @@
 {% block meta_description %}{{ project.short_description }}{% endblock %}
 
 {% block content %}
-<section class="page-header">
+<section class="project-detail-hero section-padding">
     <div class="container">
-        <nav aria-label="breadcrumb">
+        <nav aria-label="breadcrumb" class="project-breadcrumbs">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Home</a></li>
                 <li class="breadcrumb-item"><a href="{% url 'core:index' %}#projects">Projects</a></li>
                 <li class="breadcrumb-item active">{{ project.title }}</li>
             </ol>
         </nav>
-    </div>
-</section>
 
-<section class="section-padding">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="project-detail-header" data-aos="fade-up">
-                    <span class="project-category-badge mb-3">{{ project.get_category_display }}</span>
+        <div class="project-detail-shell" data-aos="fade-up">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-7">
+                    <span class="project-category-badge project-category-badge-lg mb-3">{{ project.get_category_display }}</span>
                     <h1 class="project-detail-title">{{ project.title }}</h1>
-                    <div class="project-tech-tags mt-3 mb-4">
-                        {% for tech in project.get_tech_list %}
-                        <span class="tech-tag">{{ tech }}</span>
-                        {% endfor %}
+                    <p class="project-detail-lead">{{ project.short_description }}</p>
+
+                    <div class="project-detail-meta">
+                        <div class="project-detail-meta-item">
+                            <span>Category</span>
+                            <strong>{{ project.get_category_display }}</strong>
+                        </div>
+                        <div class="project-detail-meta-item">
+                            <span>Published</span>
+                            <strong>{{ project.created_at|date:"M Y" }}</strong>
+                        </div>
+                        <div class="project-detail-meta-item">
+                            <span>Tech Stack</span>
+                            <strong>{{ tech_list|length }} Tools</strong>
+                        </div>
                     </div>
-                </div>
 
-                {% if project.image %}
-                <div class="project-detail-image mb-4" data-aos="fade-up">
-                    <img src="{{ project.image.url }}" alt="{{ project.title }}" class="img-fluid rounded">
-                </div>
-                {% endif %}
-
-                <div class="project-detail-content" data-aos="fade-up">
-                    {{ project.full_description|linebreaksbr }}
-                </div>
-            </div>
-
-            <div class="col-lg-4">
-                <div class="project-sidebar" data-aos="fade-left">
-                    <h4>Project Info</h4>
-                    <ul class="project-info-list">
-                        <li><strong>Category:</strong> {{ project.get_category_display }}</li>
-                        <li><strong>Date:</strong> {{ project.created_at|date:"M Y" }}</li>
-                        <li><strong>Tech Stack:</strong> {{ project.tech_stack }}</li>
-                    </ul>
-                    <div class="project-links mt-3">
+                    <div class="project-detail-actions mt-4">
                         {% if project.github_url %}
-                        <a href="{{ project.github_url }}" target="_blank" rel="noopener" class="btn btn-dark w-100 mb-2">
+                        <a href="{{ project.github_url }}" target="_blank" rel="noopener" class="btn btn-dark">
                             <i class="fab fa-github me-2"></i>View on GitHub
                         </a>
                         {% endif %}
                         {% if project.live_url %}
-                        <a href="{{ project.live_url }}" target="_blank" rel="noopener" class="btn btn-primary-custom w-100">
+                        <a href="{{ project.live_url }}" target="_blank" rel="noopener" class="btn btn-primary-custom">
                             <i class="fas fa-external-link-alt me-2"></i>Live Demo
                         </a>
                         {% endif %}
                     </div>
                 </div>
 
+                <div class="col-lg-5">
+                    <div class="project-detail-visual">
+                        {% if cover_image %}
+                        <img src="{{ cover_image.url }}" alt="{{ project.title }}" class="project-detail-hero-image">
+                        {% else %}
+                        <div class="project-detail-hero-placeholder">
+                            <i class="fas fa-project-diagram"></i>
+                            <span>No project image uploaded yet</span>
+                        </div>
+                        {% endif %}
+                        <div class="project-detail-visual-badge">Featured project</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-padding pt-0">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="project-content-card" data-aos="fade-up">
+                    <span class="section-kicker">Overview</span>
+                    <h2 class="project-content-title">Project story</h2>
+                    <div class="project-detail-content">
+                        {{ project.full_description|linebreaks }}
+                    </div>
+                </div>
+
+                <div class="project-content-card mt-4" data-aos="fade-up">
+                    <span class="section-kicker">Technology</span>
+                    <h2 class="project-content-title">Built with</h2>
+                    <div class="project-tech-tags project-tech-tags--large">
+                        {% for tech in tech_list %}
+                        <span class="tech-tag tech-tag-large">{{ tech }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                {% if gallery_images %}
+                <div class="project-content-card mt-4" data-aos="fade-up">
+                    <span class="section-kicker">Gallery</span>
+                    <h2 class="project-content-title">Project visuals</h2>
+                    <div class="project-gallery-grid">
+                        {% for image in gallery_images %}
+                        <a href="{{ image.image.url }}" class="project-gallery-item" target="_blank" rel="noopener">
+                            <img src="{{ image.image.url }}" alt="{{ image.caption|default:project.title }}" loading="lazy">
+                            {% if image.caption %}
+                            <span class="project-gallery-caption">{{ image.caption }}</span>
+                            {% endif %}
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% elif cover_image %}
+                <div class="project-content-card mt-4" data-aos="fade-up">
+                    <span class="section-kicker">Gallery</span>
+                    <h2 class="project-content-title">Project visuals</h2>
+                    <div class="project-gallery-grid project-gallery-grid-single">
+                        <div class="project-gallery-item project-gallery-item-single">
+                            <img src="{{ cover_image.url }}" alt="{{ project.title }}" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-lg-4">
+                <div class="project-sidebar project-sidebar-modern" data-aos="fade-left">
+                    <div class="project-sidebar-header">
+                        <span class="project-sidebar-label">Project info</span>
+                        <h3>At a glance</h3>
+                    </div>
+
+                    <ul class="project-info-list">
+                        <li><strong>Category:</strong> {{ project.get_category_display }}</li>
+                        <li><strong>Published:</strong> {{ project.created_at|date:"M Y" }}</li>
+                        <li><strong>Tech stack:</strong> {{ project.tech_stack }}</li>
+                    </ul>
+
+                    <div class="project-links mt-4">
+                        {% if project.github_url %}
+                        <a href="{{ project.github_url }}" target="_blank" rel="noopener" class="btn btn-dark w-100 mb-2">
+                            <i class="fab fa-github me-2"></i>Source code
+                        </a>
+                        {% endif %}
+                        {% if project.live_url %}
+                        <a href="{{ project.live_url }}" target="_blank" rel="noopener" class="btn btn-primary-custom w-100">
+                            <i class="fas fa-up-right-from-square me-2"></i>Open live demo
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+
                 {% if related_projects %}
-                <div class="related-projects mt-4" data-aos="fade-left" data-aos-delay="200">
-                    <h4>Related Projects</h4>
+                <div class="related-projects related-projects-modern mt-4" data-aos="fade-left" data-aos-delay="200">
+                    <div class="project-sidebar-header mb-3">
+                        <span class="project-sidebar-label">More work</span>
+                        <h3>Related projects</h3>
+                    </div>
                     {% for rp in related_projects %}
                     <a href="{% url 'core:project_detail' rp.slug %}" class="related-project-link">
                         <div class="related-project-item">

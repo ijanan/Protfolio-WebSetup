@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib import admin
 from .models import (
-    Profile, Skill, Education, Experience, Project,
+    Profile, Skill, Education, Experience, Project, ProjectImage,
     Certificate, BlogPost, AcademicGoal, ContactMessage,
 )
 
@@ -10,6 +10,11 @@ class ProjectAdminForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = '__all__'
+        widgets = {
+            'short_description': forms.Textarea(attrs={'rows': 3}),
+            'full_description': forms.Textarea(attrs={'rows': 10}),
+            'tech_stack': forms.Textarea(attrs={'rows': 3}),
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -54,6 +59,14 @@ class ExperienceAdmin(admin.ModelAdmin):
     list_filter = ('is_current',)
 
 
+class ProjectImageInline(admin.TabularInline):
+    model = ProjectImage
+    extra = 1
+    max_num = 10
+    fields = ('image', 'caption', 'order')
+    ordering = ('order', 'id')
+
+
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
     form = ProjectAdminForm
@@ -62,6 +75,18 @@ class ProjectAdmin(admin.ModelAdmin):
     list_editable = ('featured', 'order')
     prepopulated_fields = {'slug': ('title',)}
     search_fields = ('title', 'short_description', 'tech_stack')
+    inlines = [ProjectImageInline]
+    fieldsets = (
+        ('Project Basics', {
+            'fields': ('title', 'slug', 'category', 'featured', 'order', 'github_repo_id'),
+        }),
+        ('Summary', {
+            'fields': ('short_description', 'full_description'),
+        }),
+        ('Media and Links', {
+            'fields': ('image', 'tech_stack', 'github_url', 'live_url'),
+        }),
+    )
 
 
 @admin.register(Certificate)
