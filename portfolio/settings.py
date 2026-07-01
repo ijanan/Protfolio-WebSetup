@@ -26,8 +26,11 @@ raw_allowed_hosts = os.environ.get(
     'DJANGO_ALLOWED_HOSTS',
     'localhost,127.0.0.1,anan31.pythonanywhere.com,www.anan31.pythonanywhere.com'
 )
-ALLOWED_HOSTS = [host.strip().rstrip('.') for host in raw_allowed_hosts.split(',') if host.strip()]
-
+ALLOWED_HOSTS = [
+    "anan31.pythonanywhere.com",
+    "localhost",
+    "127.0.0.1",
+]
 
 # Application definition
 
