@@ -22,14 +22,20 @@
                     </h2>
                     <p class="hero-subtitle">
                         {% if profile %}{{ profile.bio|truncatewords:30 }}{% else %}
-                        CSE Graduate passionate about turning data into insights and building elegant web solutions.
+                        I turn raw, messy data into clean dashboards and business insights using Power BI, SQL, Python,
+                        and Excel. Available for freelance and full-time opportunities.
                         {% endif %}
                     </p>
                     <div class="hero-social">
-                        <a href="{% if profile and profile.github_url %}{{ profile.github_url }}{% else %}https://github.com/ijanan{% endif %}" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                        <a href="{% if profile and profile.linkedin_url %}{{ profile.linkedin_url }}{% else %}https://www.linkedin.com/in/istiak-jaman-anan/{% endif %}" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="{% if profile and profile.telegram_url %}{{ profile.telegram_url }}{% else %}https://t.me/anan_31{% endif %}" target="_blank" rel="noopener" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
-                        <a href="{% if profile %}mailto:{{ profile.email }}{% else %}mailto:jaman15-5840@diu.edu.bd{% endif %}" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                        <a href="{% if profile and profile.github_url %}{{ profile.github_url }}{% else %}https://github.com/ijanan{% endif %}"
+                            target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="{% if profile and profile.linkedin_url %}{{ profile.linkedin_url }}{% else %}https://www.linkedin.com/in/istiak-jaman-anan/{% endif %}"
+                            target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="{% if profile and profile.telegram_url %}{{ profile.telegram_url }}{% else %}https://t.me/anan_31{% endif %}"
+                            target="_blank" rel="noopener" aria-label="Telegram"><i
+                                class="fab fa-telegram-plane"></i></a>
+                        <a href="{% if profile %}mailto:{{ profile.email }}{% else %}mailto:jaman15-5840@diu.edu.bd{% endif %}"
+                            aria-label="Email"><i class="fas fa-envelope"></i></a>
                     </div>
                 </div>
             </div>
@@ -61,28 +67,31 @@
                 <div class="about-highlights">
                     <div class="highlight-card">
                         <h4><i class="fas fa-compass me-2"></i>Focus Areas</h4>
-                        <p>Data analysis, dashboarding, and building user-first web experiences.</p>
+                        <p>Data analysis, Power BI dashboards, SQL database design, data cleaning & ETL, and business
+                            reporting.</p>
                     </div>
                     <div class="highlight-card">
                         <h4><i class="fas fa-lightbulb me-2"></i>What I Do</h4>
-                        <p>Translate complex problems into clean insights and functional products.</p>
+                        <p>I translate complex, raw datasets into actionable insights dashboards executives can use in
+                            meetings, not just charts that look pretty.</p>
                     </div>
                     <div class="highlight-card">
                         <h4><i class="fas fa-layer-group me-2"></i>Core Stack</h4>
-                        <p>Python, Django, SQL, Power BI, and modern front-end tooling.</p>
+                        <p>Excel, SQL (MySQL, PostgreSQL, SQLite), Power BI (DAX, KPIs, ETL, Power Query), Python
+                            (Pandas, NumPy), Django.</p>
                     </div>
                 </div>
                 <div class="about-metrics">
                     <div class="metric-card">
-                        <span class="metric-value">10+</span>
+                        <span class="metric-value">20+</span>
                         <span class="metric-label">Projects Delivered</span>
                     </div>
                     <div class="metric-card">
-                        <span class="metric-value">3+</span>
+                        <span class="metric-value">6+</span>
                         <span class="metric-label">Data Tools Used</span>
                     </div>
                     <div class="metric-card">
-                        <span class="metric-value">2</span>
+                        <span class="metric-value">5+</span>
                         <span class="metric-label">Specializations</span>
                     </div>
                 </div>
@@ -95,7 +104,15 @@
                     {% if profile %}
                     <p>{{ profile.bio|linebreaksbr }}</p>
                     {% else %}
-                    <p>I am a recent Computer Science and Engineering graduate with a passion for data analysis and web development. I love transforming complex data into meaningful insights and building elegant, user-friendly web applications.</p>
+                    <p>I'm a Computer Science & Engineering graduate from Daffodil International University with 4+
+                        years of hands-on experience delivering data analytics, BI, and database projects for real
+                        clients not just coursework. I specialize in building Power BI dashboards with custom DAX
+                        measures, designing SQL databases,
+                        and automating reporting workflows using Excel Power Query and Python. My work spans e-commerce
+                        sales analysis, retail inventory management, supply chain reporting, and academic research.
+                        I've delivered 20+ paid projects, built dashboards tracking millions in revenue, and helped
+                        clients cut costs through data-driven decisions. I'm currently open to freelance engagements and
+                        full-time Data Analyst roles in Bangladesh and remotely.</p>
                     {% endif %}
                 </div>
                 {% if profile and profile.academic_summary %}
@@ -140,7 +157,8 @@
         </div>
         <div class="timeline">
             {% for edu in education %}
-            <div class="timeline-item {% if forloop.counter|divisibleby:2 %}timeline-right{% else %}timeline-left{% endif %}" data-aos="fade-{% if forloop.counter|divisibleby:2 %}left{% else %}right{% endif %}">
+            <div class="timeline-item {% if forloop.counter|divisibleby:2 %}timeline-right{% else %}timeline-left{% endif %}"
+                data-aos="fade-{% if forloop.counter|divisibleby:2 %}left{% else %}right{% endif %}">
                 <div class="timeline-dot education-dot"><i class="fas fa-graduation-cap"></i></div>
                 <div class="timeline-content">
                     <span class="timeline-badge badge-education">Education</span>
@@ -149,7 +167,8 @@
                     <p class="timeline-field">{{ edu.field_of_study }}</p>
                     <span class="timeline-date">
                         <i class="fas fa-calendar-alt me-1"></i>
-                        {{ edu.start_date|date:"M Y" }} — {% if edu.is_current %}Present{% elif edu.end_date %}{{ edu.end_date|date:"M Y" }}{% endif %}
+                        {{ edu.start_date|date:"M Y" }} — {% if edu.is_current %}Present{% elif edu.end_date %}{{
+                        edu.end_date|date:"M Y" }}{% endif %}
                     </span>
                     {% if edu.gpa %}<p class="timeline-gpa"><strong>GPA:</strong> {{ edu.gpa }}</p>{% endif %}
                     {% if edu.description %}<p class="mt-2">{{ edu.description }}</p>{% endif %}
@@ -158,7 +177,8 @@
             {% endfor %}
 
             {% for exp in experience %}
-            <div class="timeline-item {% if forloop.counter|divisibleby:2 %}timeline-left{% else %}timeline-right{% endif %}" data-aos="fade-{% if forloop.counter|divisibleby:2 %}right{% else %}left{% endif %}">
+            <div class="timeline-item {% if forloop.counter|divisibleby:2 %}timeline-left{% else %}timeline-right{% endif %}"
+                data-aos="fade-{% if forloop.counter|divisibleby:2 %}right{% else %}left{% endif %}">
                 <div class="timeline-dot experience-dot"><i class="fas fa-briefcase"></i></div>
                 <div class="timeline-content">
                     <span class="timeline-badge badge-experience">Experience</span>
@@ -166,7 +186,8 @@
                     <h5>{{ exp.company }}</h5>
                     <span class="timeline-date">
                         <i class="fas fa-calendar-alt me-1"></i>
-                        {{ exp.start_date|date:"M Y" }} — {% if exp.is_current %}Present{% elif exp.end_date %}{{ exp.end_date|date:"M Y" }}{% endif %}
+                        {{ exp.start_date|date:"M Y" }} — {% if exp.is_current %}Present{% elif exp.end_date %}{{
+                        exp.end_date|date:"M Y" }}{% endif %}
                     </span>
                     <p class="mt-2">{{ exp.description|linebreaksbr }}</p>
                 </div>
@@ -205,53 +226,58 @@
         </div>
 
         <div class="projects-carousel" aria-label="Projects carousel">
-            <button class="projects-nav-btn projects-nav-btn-prev" type="button" id="projectsPrev" aria-label="Previous projects">
+            <button class="projects-nav-btn projects-nav-btn-prev" type="button" id="projectsPrev"
+                aria-label="Previous projects">
                 <i class="fas fa-chevron-left"></i>
             </button>
 
             <div class="projects-viewport" id="projectsViewport">
                 <div class="projects-track" id="projectGrid">
-                {% for project in projects %}
-                <div class="project-card-wrapper show" data-category="{{ project.category|default:'other'|lower }}">
-                    <div class="project-card">
-                        <div class="project-card-image">
-                            {% with cover_image=project.get_cover_image %}
-                            {% if cover_image %}
-                            <img src="{{ cover_image.url }}" alt="{{ project.title }}" loading="lazy">
-                            {% else %}
-                            <div class="project-placeholder-image">
-                                <i class="fas fa-project-diagram fa-3x"></i>
-                            </div>
-                            {% endif %}
-                            {% endwith %}
-                            <div class="project-card-overlay">
-                                <a href="{% url 'core:project_detail' project.slug %}" class="btn btn-sm btn-light"><i class="fas fa-eye me-1"></i>Details</a>
-                                {% if project.github_url %}
-                                <a href="{{ project.github_url }}" target="_blank" rel="noopener" class="btn btn-sm btn-dark"><i class="fab fa-github me-1"></i>Code</a>
+                    {% for project in projects %}
+                    <div class="project-card-wrapper show" data-category="{{ project.category|default:'other'|lower }}">
+                        <div class="project-card">
+                            <div class="project-card-image">
+                                {% with cover_image=project.get_cover_image %}
+                                {% if cover_image %}
+                                <img src="{{ cover_image.url }}" alt="{{ project.title }}" loading="lazy">
+                                {% else %}
+                                <div class="project-placeholder-image">
+                                    <i class="fas fa-project-diagram fa-3x"></i>
+                                </div>
                                 {% endif %}
+                                {% endwith %}
+                                <div class="project-card-overlay">
+                                    <a href="{% url 'core:project_detail' project.slug %}"
+                                        class="btn btn-sm btn-light"><i class="fas fa-eye me-1"></i>Details</a>
+                                    {% if project.github_url %}
+                                    <a href="{{ project.github_url }}" target="_blank" rel="noopener"
+                                        class="btn btn-sm btn-dark"><i class="fab fa-github me-1"></i>Code</a>
+                                    {% endif %}
+                                </div>
                             </div>
-                        </div>
-                        <div class="project-card-body">
-                            <span class="project-category-badge">{{ project.get_category_display }}</span>
-                            <h5 class="project-card-title">{{ project.title }}</h5>
-                            <p class="project-card-text">{{ project.short_description }}</p>
-                            <div class="project-tech-tags">
-                                {% for tech in project.get_tech_list %}
-                                <span class="tech-tag">{{ tech }}</span>
-                                {% endfor %}
+                            <div class="project-card-body">
+                                <span class="project-category-badge">{{ project.get_category_display }}</span>
+                                <h5 class="project-card-title">{{ project.title }}</h5>
+                                <p class="project-card-text">{{ project.short_description }}</p>
+                                <div class="project-tech-tags">
+                                    {% for tech in project.get_tech_list %}
+                                    <span class="tech-tag">{{ tech }}</span>
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                {% empty %}
-                <div class="projects-empty">
-                    <p class="text-center text-muted">Projects will be displayed here once added via the admin panel.</p>
-                </div>
-                {% endfor %}
+                    {% empty %}
+                    <div class="projects-empty">
+                        <p class="text-center text-muted">Projects will be displayed here once added via the admin
+                            panel.</p>
+                    </div>
+                    {% endfor %}
                 </div>
             </div>
 
-            <button class="projects-nav-btn projects-nav-btn-next" type="button" id="projectsNext" aria-label="Next projects">
+            <button class="projects-nav-btn projects-nav-btn-next" type="button" id="projectsNext"
+                aria-label="Next projects">
                 <i class="fas fa-chevron-right"></i>
             </button>
         </div>
@@ -368,7 +394,8 @@
                     </div>
                     {% endif %}
                     <div class="blog-card-body">
-                        <span class="blog-date"><i class="fas fa-calendar me-1"></i>{{ post.published_date|date:"M d, Y" }}</span>
+                        <span class="blog-date"><i class="fas fa-calendar me-1"></i>{{ post.published_date|date:"M d, Y"
+                            }}</span>
                         <h5>{{ post.title }}</h5>
                         <p>{{ post.excerpt|default:post.content|truncatewords:20 }}</p>
                         <a href="{% url 'core:blog_detail' post.slug %}" class="read-more-link">
@@ -401,7 +428,8 @@
                         <div class="contact-info-icon"><i class="fas fa-envelope"></i></div>
                         <div>
                             <h5>Email</h5>
-                            <p>{% if profile and profile.email %}{{ profile.email }}{% else %}jaman15-5840@diu.edu.bd{% endif %}</p>
+                            <p>{% if profile and profile.email %}{{ profile.email }}{% else %}jaman15-5840@diu.edu.bd{%
+                                endif %}</p>
                         </div>
                     </div>
                     <div class="contact-info-item">
@@ -419,9 +447,13 @@
                         </div>
                     </div>
                     <div class="contact-social mt-4">
-                        <a href="{% if profile and profile.github_url %}{{ profile.github_url }}{% else %}https://github.com/ijanan{% endif %}" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
-                        <a href="{% if profile and profile.linkedin_url %}{{ profile.linkedin_url }}{% else %}https://www.linkedin.com/in/istiak-jaman-anan/{% endif %}" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="{% if profile and profile.email %}mailto:{{ profile.email }}{% else %}mailto:jaman15-5840@diu.edu.bd{% endif %}"><i class="fas fa-envelope"></i></a>
+                        <a href="{% if profile and profile.github_url %}{{ profile.github_url }}{% else %}https://github.com/ijanan{% endif %}"
+                            target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+                        <a href="{% if profile and profile.linkedin_url %}{{ profile.linkedin_url }}{% else %}https://www.linkedin.com/in/istiak-jaman-anan/{% endif %}"
+                            target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
+                        <a
+                            href="{% if profile and profile.email %}mailto:{{ profile.email }}{% else %}mailto:jaman15-5840@diu.edu.bd{% endif %}"><i
+                                class="fas fa-envelope"></i></a>
                     </div>
                 </div>
             </div>
@@ -457,7 +489,7 @@
 
 <!-- Typing text data for JS -->
 <script>
-    window.typingTexts = {{ typing_texts|safe }};
+    window.typingTexts = {{ typing_texts | safe }};
 </script>
 
 {% endblock %}
