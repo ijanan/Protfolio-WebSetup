@@ -428,8 +428,13 @@
                         <div class="contact-info-icon"><i class="fas fa-envelope"></i></div>
                         <div>
                             <h5>Email</h5>
-                            <p>{% if profile and profile.email %}{{ profile.email }}{% else %}jaman15-5840@diu.edu.bd{%
-                                endif %}</p>
+                            <p>
+                                {% if profile and profile.email %}
+                                    {{ profile.email }}
+                                {% else %}
+                                    istiakjamananan@gmail.com
+                                {% endif %}
+                            </p>
                         </div>
                     </div>
                     <div class="contact-info-item">
@@ -447,13 +452,21 @@
                         </div>
                     </div>
                     <div class="contact-social mt-4">
-                        <a href="{% if profile and profile.github_url %}{{ profile.github_url }}{% else %}https://github.com/ijanan{% endif %}"
-                            target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
-                        <a href="{% if profile and profile.linkedin_url %}{{ profile.linkedin_url }}{% else %}https://www.linkedin.com/in/istiak-jaman-anan/{% endif %}"
-                            target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
-                        <a
-                            href="{% if profile and profile.email %}mailto:{{ profile.email }}{% else %}mailto:jaman15-5840@diu.edu.bd{% endif %}"><i
-                                class="fas fa-envelope"></i></a>
+                        {% if profile and profile.github_url %}
+                        <a href="{{ profile.github_url }}" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+                        {% else %}
+                        <a href="https://github.com/ijanan" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+                        {% endif %}
+                        {% if profile and profile.linkedin_url %}
+                        <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
+                        {% else %}
+                        <a href="https://www.linkedin.com/in/istiak-jaman-anan/" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
+                        {% endif %}
+                        {% if profile and profile.email %}
+                        <a href="mailto:{{ profile.email }}"><i class="fas fa-envelope"></i></a>
+                        {% else %}
+                        <a href="mailto:istiakjamananan@gmail.com"><i class="fas fa-envelope"></i></a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -489,7 +502,7 @@
 
 <!-- Typing text data for JS -->
 <script>
-    window.typingTexts = {{ typing_texts | safe }};
+    window.typingTexts = JSON.parse('{{ typing_texts | escapejs }}');
 </script>
 
 {% endblock %}
