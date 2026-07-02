@@ -28,8 +28,15 @@ class Profile(models.Model):
 
     def get_typing_list(self):
         if self.typing_texts:
-            return [t.strip() for t in self.typing_texts.split(',')]
-        return [self.title]
+            parts = [t.strip() for t in self.typing_texts.replace('|', ',').split(',')]
+            return [part for part in parts if part]
+
+        parts = [t.strip() for t in self.title.replace('|', ',').split(',')]
+        return [part for part in parts if part] or [self.title]
+
+    def get_primary_title(self):
+        typing_list = self.get_typing_list()
+        return typing_list[0] if typing_list else self.title
 
 
 class Skill(models.Model):

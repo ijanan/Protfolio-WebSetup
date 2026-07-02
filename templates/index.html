@@ -21,9 +21,7 @@
                         <span id="typed-text"></span><span class="typed-cursor">|</span>
                     </h2>
                     <p class="hero-subtitle">
-                        {% if profile %}{{ profile.bio|truncatewords:20 }}{% else %}
-                        Turning data into decisions. Power BI dashboards, SQL databases, and Python automation that drive real business results.
-                        {% endif %}
+                        {{ hero_bio }}
                     </p>
                     <div class="hero-social">
                         <a href="{% if profile and profile.github_url %}{{ profile.github_url }}{% else %}https://github.com/ijanan{% endif %}"
@@ -97,33 +95,13 @@
             </div>
             <div class="col-lg-7" data-aos="fade-left">
                 <h3 class="about-heading">
-                    {% if profile %}{{ profile.title }}{% else %}CSE Graduate | Data Analyst | Web Developer{% endif %}
+                    Who I am
                 </h3>
                 <div class="about-text">
-                    {% if profile %}
-                    <p>{{ profile.bio|linebreaksbr }}</p>
-                    {% else %}
-                    <p>I'm a Computer Science & Engineering graduate from Daffodil International University with 4+
-                        years of hands-on experience delivering data analytics, BI, and database projects for real
-                        clients — not just coursework.
-                        I specialize in building Power BI dashboards with custom DAX measures, designing SQL databases,
-                        and automating reporting workflows using Excel Power Query and Python. My work spans e-commerce
-                        sales analysis, retail inventory management, supply chain reporting, and academic research.
-                        I've delivered 20+ paid projects, built dashboards tracking millions in revenue, and helped
-                        clients cut costs through data-driven decisions. I'm currently open to freelance engagements and
-                        full-time Data Analyst roles in Bangladesh and remotely.</p>
-                    {% endif %}
+                    <p>{{ about_bio|linebreaksbr }}</p>
                 </div>
 
                 <div class="about-divider mt-5 mb-5"></div>
-
-                <div class="about-cta">
-                    <p class="about-cta-subtitle">Let's collaborate on your next project</p>
-                    <h4 class="about-cta-email">
-                        <a href="mailto:istiakjamananan@gmail.com">istiakjamananan@gmail.com</a>
-                    </h4>
-                    <p class="about-cta-text">Available for freelance projects and full-time opportunities</p>
-                </div>
 
                 <div class="about-buttons mt-5">
                     <a href="{% url 'core:download_resume' %}" class="btn btn-primary-custom">

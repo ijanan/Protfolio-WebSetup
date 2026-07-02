@@ -20,6 +20,22 @@ from .github_sync import maybe_sync_github_projects
 
 logger = logging.getLogger(__name__)
 
+HERO_BIO = (
+    'I turn raw, messy data into clean dashboards and business insights using Power BI, SQL, Python, and Excel. '
+    'Available for freelance and full-time opportunities.'
+)
+
+ABOUT_BIO = (
+    "I'm a Computer Science & Engineering graduate from Daffodil International University with 4+ years of hands-on "
+    'experience delivering data analytics, BI, and database projects for real clients — not just coursework.\n\n'
+    'I specialize in building Power BI dashboards with custom DAX measures, designing SQL databases, and automating '
+    'reporting workflows using Excel Power Query and Python. My work spans e-commerce sales analysis, retail inventory '
+    'management, supply chain reporting, and academic research.\n\n'
+    "I've delivered 20+ paid projects, built dashboards tracking millions in revenue, and helped clients cut costs "
+    'through data-driven decisions. I\'m currently open to freelance engagements and full-time Data Analyst roles in '
+    'Bangladesh and remotely.'
+)
+
 
 def index(request):
     profile = Profile.objects.first()
@@ -36,6 +52,9 @@ def index(request):
 
     context = {
         'profile': profile,
+        'hero_bio': HERO_BIO,
+        'about_bio': ABOUT_BIO,
+        'primary_title': profile.get_primary_title() if profile else 'CSE Graduate',
         'skill_categories': skill_categories,
         'education': Education.objects.all(),
         'experience': Experience.objects.all(),
