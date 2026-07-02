@@ -21,9 +21,8 @@
                         <span id="typed-text"></span><span class="typed-cursor">|</span>
                     </h2>
                     <p class="hero-subtitle">
-                        {% if profile %}{{ profile.bio|truncatewords:30 }}{% else %}
-                        I turn raw, messy data into clean dashboards and business insights using Power BI, SQL, Python,
-                        and Excel. Available for freelance and full-time opportunities.
+                        {% if profile %}{{ profile.bio|truncatewords:20 }}{% else %}
+                        Turning data into decisions. Power BI dashboards, SQL databases, and Python automation that drive real business results.
                         {% endif %}
                     </p>
                     <div class="hero-social">
@@ -34,7 +33,7 @@
                         <a href="{% if profile and profile.telegram_url %}{{ profile.telegram_url }}{% else %}https://t.me/anan_31{% endif %}"
                             target="_blank" rel="noopener" aria-label="Telegram"><i
                                 class="fab fa-telegram-plane"></i></a>
-                        <a href="{% if profile %}mailto:{{ profile.email }}{% else %}mailto:jaman15-5840@diu.edu.bd{% endif %}"
+                        <a href="{% if profile %}mailto:{{ profile.email }}{% else %}mailto:istiakjamananan@gmail.com{% endif %}"
                             aria-label="Email"><i class="fas fa-envelope"></i></a>
                     </div>
                 </div>
@@ -106,8 +105,8 @@
                     {% else %}
                     <p>I'm a Computer Science & Engineering graduate from Daffodil International University with 4+
                         years of hands-on experience delivering data analytics, BI, and database projects for real
-                        clients not just coursework. I specialize in building Power BI dashboards with custom DAX
-                        measures, designing SQL databases,
+                        clients — not just coursework.
+                        I specialize in building Power BI dashboards with custom DAX measures, designing SQL databases,
                         and automating reporting workflows using Excel Power Query and Python. My work spans e-commerce
                         sales analysis, retail inventory management, supply chain reporting, and academic research.
                         I've delivered 20+ paid projects, built dashboards tracking millions in revenue, and helped
@@ -115,27 +114,18 @@
                         full-time Data Analyst roles in Bangladesh and remotely.</p>
                     {% endif %}
                 </div>
-                {% if profile and profile.academic_summary %}
-                <div class="about-academic-note mt-3">
-                    <div class="academic-note-icon"><i class="fas fa-graduation-cap"></i></div>
-                    <p>{{ profile.academic_summary }}</p>
+
+                <div class="about-divider mt-5 mb-5"></div>
+
+                <div class="about-cta">
+                    <p class="about-cta-subtitle">Let's collaborate on your next project</p>
+                    <h4 class="about-cta-email">
+                        <a href="mailto:istiakjamananan@gmail.com">istiakjamananan@gmail.com</a>
+                    </h4>
+                    <p class="about-cta-text">Available for freelance projects and full-time opportunities</p>
                 </div>
-                {% endif %}
-                <div class="about-info mt-4">
-                    <div class="row">
-                        {% if profile %}
-                        <div class="col-sm-6">
-                            <p><strong>Name:</strong> {{ profile.name }}</p>
-                            <p><strong>Email:</strong> {{ profile.email }}</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <p><strong>Degree:</strong> B.Sc. in CSE</p>
-                            <p><strong>Location:</strong> Bangladesh</p>
-                        </div>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="about-buttons mt-4">
+
+                <div class="about-buttons mt-5">
                     <a href="{% url 'core:download_resume' %}" class="btn btn-primary-custom">
                         <i class="fas fa-download me-2"></i>Download CV
                     </a>
@@ -382,9 +372,9 @@
                             <h5>Email</h5>
                             <p>
                                 {% if profile and profile.email %}
-                                    {{ profile.email }}
+                                {{ profile.email }}
                                 {% else %}
-                                    istiakjamananan@gmail.com
+                                istiakjamananan@gmail.com
                                 {% endif %}
                             </p>
                         </div>
@@ -405,14 +395,18 @@
                     </div>
                     <div class="contact-social mt-4">
                         {% if profile and profile.github_url %}
-                        <a href="{{ profile.github_url }}" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+                        <a href="{{ profile.github_url }}" target="_blank" rel="noopener"><i
+                                class="fab fa-github"></i></a>
                         {% else %}
-                        <a href="https://github.com/ijanan" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+                        <a href="https://github.com/ijanan" target="_blank" rel="noopener"><i
+                                class="fab fa-github"></i></a>
                         {% endif %}
                         {% if profile and profile.linkedin_url %}
-                        <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener"><i
+                                class="fab fa-linkedin-in"></i></a>
                         {% else %}
-                        <a href="https://www.linkedin.com/in/istiak-jaman-anan/" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.linkedin.com/in/istiak-jaman-anan/" target="_blank" rel="noopener"><i
+                                class="fab fa-linkedin-in"></i></a>
                         {% endif %}
                         {% if profile and profile.email %}
                         <a href="mailto:{{ profile.email }}"><i class="fas fa-envelope"></i></a>

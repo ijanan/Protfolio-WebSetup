@@ -37,12 +37,7 @@ class ProjectCategoryFilter(admin.SimpleListFilter):
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('name',)
-    fieldsets = (
-        ('CV Upload & Update', {
-            'fields': ('resume',)
-        }),
-    )
-    exclude = ('name', 'title', 'bio', 'academic_summary', 'photo', 'github_url', 'linkedin_url', 'telegram_url', 'email', 'typing_texts')
+    fields = ('resume',)
 
     def has_add_permission(self, request):
         return not Profile.objects.exists()

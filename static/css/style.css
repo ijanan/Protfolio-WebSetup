@@ -643,6 +643,75 @@ img {
     margin-bottom: 1rem;
 }
 
+.about-divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    border-radius: 1px;
+}
+
+.about-cta {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    background: rgba(15, 118, 110, 0.04);
+    border-radius: 20px;
+    border: 1px solid rgba(15, 118, 110, 0.15);
+    transition: all 0.4s ease;
+}
+
+.about-cta:hover {
+    background: rgba(15, 118, 110, 0.08);
+    border-color: rgba(15, 118, 110, 0.3);
+    transform: translateY(-2px);
+}
+
+.about-cta-subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.about-cta-email {
+    margin: 0.5rem 0 1rem 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.about-cta-email a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.about-cta-email a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.about-cta-email a:hover {
+    color: var(--accent-dark);
+}
+
+.about-cta-email a:hover::after {
+    transform: scaleX(1);
+}
+
+.about-cta-text {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-top: 0.8rem;
+}
+
 .about-academic-note {
     display: flex;
     gap: 1rem;
@@ -658,6 +727,11 @@ img {
     flex-shrink: 0;
 }
 
+.academic-note-content h5 {
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
 .about-academic-note p {
     color: var(--text-secondary);
     margin: 0;
@@ -671,6 +745,57 @@ img {
 
 .about-info strong {
     color: var(--text-primary);
+}
+
+.info-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1.2rem;
+    background: var(--bg-secondary);
+    border-radius: 14px;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.info-item:hover {
+    background: rgba(15, 118, 110, 0.08);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+}
+
+.info-item i {
+    font-size: 1.5rem;
+    color: var(--accent);
+    flex-shrink: 0;
+    align-self: flex-start;
+    margin-top: 0.2rem;
+}
+
+.info-item div {
+    flex: 1;
+}
+
+.info-item h6 {
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.info-item p {
+    color: var(--text-secondary);
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.info-item a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.info-item a:hover {
+    color: var(--accent-dark);
+    text-decoration: underline;
 }
 
 /* ========================================
