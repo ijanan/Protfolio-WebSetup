@@ -95,7 +95,7 @@
             </div>
             <div class="col-lg-7" data-aos="fade-left">
                 <h3 class="about-heading">
-                    Who I am
+                    Hello! I'm {% if profile %}{{ profile.name }}{% else %}Istiak Jaman Anan{% endif %},
                 </h3>
                 <div class="about-text">
                     <p>{{ about_bio|linebreaksbr }}</p>
