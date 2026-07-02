@@ -20,8 +20,8 @@ class Profile(models.Model):
     )
 
     class Meta:
-        verbose_name = "Profile"
-        verbose_name_plural = "Profile"
+        verbose_name = "Resume"
+        verbose_name_plural = "Resume"
 
     def __str__(self):
         return self.name

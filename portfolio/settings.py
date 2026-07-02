@@ -22,6 +22,19 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'dev-only-q1tbkv9*%1s25)&@7z(c+
 
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
+GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN', '')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'no-reply@localhost')
+EMAIL_BACKEND = os.environ.get(
+    'EMAIL_BACKEND',
+    'django.core.mail.backends.console.EmailBackend' if not os.environ.get('EMAIL_HOST') else 'django.core.mail.backends.smtp.EmailBackend',
+)
+EMAIL_HOST = os.environ.get('EMAIL_HOST', '')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', '587'))
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True') == 'True'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+SERVER_EMAIL = os.environ.get('SERVER_EMAIL', DEFAULT_FROM_EMAIL)
+
 raw_allowed_hosts = os.environ.get(
     'DJANGO_ALLOWED_HOSTS',
     'localhost,127.0.0.1,anan31.pythonanywhere.com,www.anan31.pythonanywhere.com'

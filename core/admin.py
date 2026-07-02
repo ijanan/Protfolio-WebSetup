@@ -2,7 +2,7 @@ from django import forms
 from django.contrib import admin
 from .models import (
     Profile, Skill, Education, Experience, Project, ProjectImage,
-    Certificate, BlogPost, AcademicGoal, ContactMessage,
+    BlogPost, ContactMessage,
 )
 
 
@@ -36,7 +36,19 @@ class ProjectCategoryFilter(admin.SimpleListFilter):
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('name', 'title', 'email')
+    list_display = ('name',)
+    fieldsets = (
+        ('CV Upload & Update', {
+            'fields': ('resume',)
+        }),
+    )
+    exclude = ('name', 'title', 'bio', 'academic_summary', 'photo', 'github_url', 'linkedin_url', 'telegram_url', 'email', 'typing_texts')
+
+    def has_add_permission(self, request):
+        return not Profile.objects.exists()
+
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 
 @admin.register(Skill)
@@ -89,13 +101,6 @@ class ProjectAdmin(admin.ModelAdmin):
     )
 
 
-@admin.register(Certificate)
-class CertificateAdmin(admin.ModelAdmin):
-    list_display = ('title', 'issuer', 'date')
-    list_filter = ('issuer',)
-    search_fields = ('title',)
-
-
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
     list_display = ('title', 'is_published', 'published_date')
@@ -103,11 +108,6 @@ class BlogPostAdmin(admin.ModelAdmin):
     list_editable = ('is_published',)
     prepopulated_fields = {'slug': ('title',)}
     search_fields = ('title', 'content')
-
-
-@admin.register(AcademicGoal)
-class AcademicGoalAdmin(admin.ModelAdmin):
-    list_display = ('target_degree', 'target_countries')
 
 
 @admin.register(ContactMessage)

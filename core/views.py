@@ -1,19 +1,33 @@
 import json
+import logging
 import mimetypes
+import os
 
+from django.conf import settings
+from django.core.cache import cache
+from django.core.mail import send_mail
 from django.http import FileResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 
 from .models import (
     Profile, Skill, Education, Experience, Project,
-    Certificate, BlogPost, AcademicGoal,
+    BlogPost,
 )
 from .forms import ContactForm
+from .github_sync import maybe_sync_github_projects
+
+
+logger = logging.getLogger(__name__)
 
 
 def index(request):
     profile = Profile.objects.first()
+    try:
+        maybe_sync_github_projects(cache=cache, profile=profile, token=os.environ.get('GITHUB_TOKEN'))
+    except Exception as exc:
+        logger.warning('GitHub sync skipped for homepage: %s', exc)
+
     skills = Skill.objects.all()
     skill_categories = {}
     for skill in skills:
@@ -26,9 +40,7 @@ def index(request):
         'education': Education.objects.all(),
         'experience': Experience.objects.all(),
         'projects': Project.objects.prefetch_related('gallery_images').all(),
-        'certificates': Certificate.objects.all(),
         'blog_posts': BlogPost.objects.filter(is_published=True)[:3],
-        'academic_goals': AcademicGoal.objects.all(),
         'contact_form': ContactForm(),
         'typing_texts': json.dumps(profile.get_typing_list()) if profile else json.dumps([
             'A Student',
@@ -79,15 +91,38 @@ def contact_submit(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            form.save()
+            message = form.save()
+            profile = Profile.objects.first()
+            recipient_email = profile.email if profile else getattr(settings, 'DEFAULT_FROM_EMAIL', 'no-reply@localhost')
+            email_subject = f"Portfolio contact: {message.subject}"
+            email_body = (
+                f"Name: {message.name}\n"
+                f"Email: {message.email}\n"
+                f"Subject: {message.subject}\n\n"
+                f"Message:\n{message.message}"
+            )
+
+            try:
+                send_mail(
+                    email_subject,
+                    email_body,
+                    getattr(settings, 'DEFAULT_FROM_EMAIL', 'no-reply@localhost'),
+                    [recipient_email],
+                    fail_silently=False,
+                    reply_to=[message.email],
+                )
+            except Exception as exc:
+                logger.exception('Failed to send contact email: %s', exc)
+                return JsonResponse({'success': False, 'message': 'Message saved, but email delivery failed.'}, status=500)
+
             return JsonResponse({'success': True, 'message': 'Thank you! Your message has been sent.'})
         return JsonResponse({'success': False, 'errors': form.errors}, status=400)
     return JsonResponse({'error': 'Invalid request'}, status=405)
 
 
 def download_resume(request):
-    profile = get_object_or_404(Profile)
-    if not profile.resume:
+    profile = Profile.objects.first()
+    if not profile or not profile.resume:
         return JsonResponse({'error': 'No resume uploaded'}, status=404)
     content_type, _ = mimetypes.guess_type(profile.resume.path)
     return FileResponse(

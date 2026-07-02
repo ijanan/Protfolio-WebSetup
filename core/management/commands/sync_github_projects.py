@@ -9,6 +9,7 @@ from django.db import transaction
 from django.utils.text import slugify
 
 from core.models import Profile, Project
+from core.github_sync import get_profile_github_username, sync_github_projects
 
 
 GITHUB_API_BASE = "https://api.github.com"
@@ -287,7 +288,7 @@ class Command(BaseCommand):
 
         if not username:
             profile = Profile.objects.first()
-            username = _parse_github_username(profile.github_url if profile else "")
+            username = get_profile_github_username(profile)
 
         if not username:
             raise CommandError(
@@ -295,103 +296,23 @@ class Command(BaseCommand):
                 "Pass --username YOURNAME or set Profile.github_url to your GitHub profile URL."
             )
 
-        url = f"{GITHUB_API_BASE}/users/{urllib.parse.quote(username)}/repos?per_page=100&sort=updated"
-
-        repos: list[dict] = []
-        while url:
-            status, headers, body = _github_request(url, token)
-            if status >= 400:
-                raise CommandError(f"GitHub API error {status}: {body[:2000]!r}")
-
-            try:
-                page = json.loads(body.decode("utf-8"))
-            except Exception as e:
-                raise CommandError(f"Could not parse GitHub API response JSON: {e}")
-
-            if not isinstance(page, list):
-                raise CommandError("Unexpected GitHub API response (expected list of repos).")
-
-            repos.extend(page)
-            if limit and len(repos) >= limit:
-                repos = repos[:limit]
-                break
-
-            url = _get_next_link(headers.get("Link"))
-
-        created = 0
-        updated = 0
-        skipped = 0
-
-        with transaction.atomic():
-            for repo in repos:
-                repo_id = repo.get("id")
-                if not repo_id:
-                    skipped += 1
-                    continue
-
-                if (not include_forks) and repo.get("fork"):
-                    skipped += 1
-                    continue
-
-                if (not include_archived) and repo.get("archived"):
-                    skipped += 1
-                    continue
-
-                defaults = {
-                    "title": (repo.get("name") or "Untitled").replace("-", " ").replace("_", " ").strip() or "Untitled",
-                    "short_description": (repo.get("description") or "No description provided.")[:300],
-                    "full_description": (repo.get("description") or "No description provided."),
-                    "category": _infer_category(repo, default_category) if auto_category else default_category,
-                    "tech_stack": (repo.get("language") or "GitHub"),
-                    "github_url": repo.get("html_url") or "",
-                    "live_url": repo.get("homepage") or "",
-                }
-
-                project = Project.objects.filter(github_repo_id=repo_id).first()
-                if project:
-                    # Always keep URLs in sync; optionally update the rest.
-                    changed = False
-                    if project.github_url != defaults["github_url"]:
-                        project.github_url = defaults["github_url"]
-                        changed = True
-                    if project.live_url != defaults["live_url"]:
-                        project.live_url = defaults["live_url"]
-                        changed = True
-
-                    if update_existing:
-                        fields = ["title", "short_description", "full_description", "tech_stack"]
-                        if update_category:
-                            fields.append("category")
-
-                        for field in fields:
-                            new_val = defaults[field]
-                            if getattr(project, field) != new_val:
-                                setattr(project, field, new_val)
-                                changed = True
-
-                        # Keep slug consistent if title changed and slug was auto-generated originally.
-                        # We won't auto-change slugs because it can break existing URLs.
-
-                    if changed:
-                        project.save()
-                        updated += 1
-                    else:
-                        skipped += 1
-                    continue
-
-                # Create new project.
-                title = defaults["title"]
-                slug = _unique_slug_from_title(title, fallback_suffix=str(repo_id))
-
-                Project.objects.create(
-                    github_repo_id=repo_id,
-                    slug=slug,
-                    **defaults,
-                )
-                created += 1
+        try:
+            result = sync_github_projects(
+                username=username,
+                token=token,
+                include_forks=include_forks,
+                include_archived=include_archived,
+                update_existing=update_existing,
+                auto_category=auto_category,
+                update_category=update_category,
+                default_category=default_category,
+                limit=limit,
+            )
+        except Exception as exc:
+            raise CommandError(str(exc)) from exc
 
         self.stdout.write(
             self.style.SUCCESS(
-                f"GitHub sync complete for '{username}': created={created}, updated={updated}, skipped={skipped}"
+                f"GitHub sync complete for '{result['username']}': created={result['created']}, updated={result['updated']}, skipped={result['skipped']}"
             )
         )
