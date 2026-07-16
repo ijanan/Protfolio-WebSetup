@@ -2255,77 +2255,62 @@ img {
     opacity: 1;
     transform: none;
 }
-/* ========================================
-   Education (left) / Experience (right) split layout
-   ======================================== */
+
+/* ============================================================
+   Education (left) / Experience (right) two-column timeline
+   Uses a left-aligned vertical line inside each column.
+   ============================================================ */
 .edu-exp-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 2rem;
+    gap: 2.5rem;
     align-items: flex-start;
 }
 
 .edu-exp-col {
-    flex: 1 1 0;
-    min-width: 300px;
+    flex: 1 1 320px;
+    min-width: 280px;
 }
 
 .edu-exp-heading {
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
-    color: #0f766e;
     text-align: center;
+    color: var(--accent, #0f766e);
 }
 
-.timeline-split {
-    position: relative;
-    padding: 1.5rem 0;
+/* Give each column its own timeline rail on the left */
+.edu-exp-col .timeline {
+    padding: 1.5rem 0 1.5rem 0;
 }
 
-.timeline-split::before {
-    content: '';
-    position: absolute;
-    left: 20px;
-    top: 0;
-    bottom: 0;
+.edu-exp-col .timeline::before {
+    left: 22px;
+    transform: none;
     width: 3px;
-    background: linear-gradient(180deg, rgba(15, 118, 110, 0.25), rgba(29, 78, 216, 0.25));
-    border-radius: 3px;
+    background: linear-gradient(180deg, rgba(15, 118, 110, 0.3), rgba(29, 78, 216, 0.35));
 }
 
-.timeline-split .timeline-item {
+.edu-exp-col .timeline-item {
     width: 100%;
-    padding-left: 56px;
-    padding-right: 0;
-    margin-bottom: 1.5rem;
-    text-align: left;
+    left: 0 !important;
+    padding: 0 0 2rem 60px !important;
+    margin-bottom: 0;
+    text-align: left !important;
 }
 
-.timeline-split .timeline-item .timeline-dot {
-    left: 8px;
-    right: auto;
+.edu-exp-col .timeline-dot {
+    left: 0 !important;
+    right: auto !important;
+    top: 0;
 }
 
-.timeline-split .timeline-content {
+.edu-exp-col .timeline-content {
     margin-left: 0;
     text-align: left;
 }
 
 @media (max-width: 991.98px) {
-    .edu-exp-col {
-        flex-basis: 100%;
-    }
-}
-
-/* Project card action links */
-.project-card-links {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-top: 0.75rem;
-}
-
-.project-card-links .btn {
-    flex: 1 1 auto;
+    .edu-exp-col { flex-basis: 100%; }
 }
