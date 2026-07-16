@@ -40,21 +40,23 @@
                         </div>
                         {% endif %}
                         {% endwith %}
-                        <div class="project-card-overlay">
-                            <a href="{% url 'core:project_detail' project.slug %}" class="btn btn-sm btn-light"><i class="fas fa-eye me-1"></i>Details</a>
-                            {% if project.github_url %}
-                            <a href="{{ project.github_url }}" target="_blank" rel="noopener" class="btn btn-sm btn-dark"><i class="fab fa-github me-1"></i>Code</a>
-                            {% endif %}
-                        </div>
                     </div>
                     <div class="project-card-body">
                         <span class="project-category-badge">{{ project.get_category_display }}</span>
                         <h5 class="project-card-title">{{ project.title }}</h5>
-                        <p class="project-card-text">{{ project.short_description }}</p>
                         <div class="project-tech-tags">
                             {% for tech in project.get_tech_list %}
                             <span class="tech-tag">{{ tech }}</span>
                             {% endfor %}
+                        </div>
+                        <p class="project-card-text">{{ project.short_description }}</p>
+                        <div class="project-card-links">
+                            {% if project.github_url %}
+                            <a href="{{ project.github_url }}" target="_blank" rel="noopener" class="btn btn-sm btn-dark"><i class="fab fa-github me-1"></i>GitHub</a>
+                            {% endif %}
+                            {% if project.live_url %}
+                            <a href="{{ project.live_url }}" target="_blank" rel="noopener" class="btn btn-sm btn-primary-custom"><i class="fas fa-external-link-alt me-1"></i>Live</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

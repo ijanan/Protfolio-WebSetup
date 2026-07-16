@@ -6,6 +6,10 @@ class Profile(models.Model):
     """Singleton profile — only one instance should exist."""
     name = models.CharField(max_length=100)
     title = models.CharField(max_length=200, help_text="e.g. CSE Graduate | Data Analyst | Web Developer")
+    hero_tagline = models.TextField(
+        blank=True,
+        help_text="Short intro shown under your name in the hero section (leave blank to use the default).",
+    )
     bio = models.TextField()
     academic_summary = models.TextField(blank=True, help_text="Brief academic aspirations for scholarship committees")
     photo = models.ImageField(upload_to='profile/', blank=True)
@@ -20,8 +24,8 @@ class Profile(models.Model):
     )
 
     class Meta:
-        verbose_name = "Resume"
-        verbose_name_plural = "Resume"
+        verbose_name = "Profile / Hero Section"
+        verbose_name_plural = "Profile / Hero Section"
 
     def __str__(self):
         return self.name

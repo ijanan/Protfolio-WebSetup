@@ -5,7 +5,7 @@ import os
 
 from django.conf import settings
 from django.core.cache import cache
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 from django.http import FileResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
@@ -52,8 +52,8 @@ def index(request):
 
     context = {
         'profile': profile,
-        'hero_bio': HERO_BIO,
-        'about_bio': ABOUT_BIO,
+        'hero_bio': (profile.hero_tagline if profile and profile.hero_tagline else HERO_BIO),
+        'about_bio': (profile.bio if profile and profile.bio else ABOUT_BIO),
         'primary_title': profile.get_primary_title() if profile else 'CSE Graduate',
         'skill_categories': skill_categories,
         'education': Education.objects.all(),
@@ -69,18 +69,6 @@ def index(request):
         ]),
     }
     return render(request, 'index.html', context)
-
-
-def project_detail(request, slug):
-    project = get_object_or_404(Project.objects.prefetch_related('gallery_images'), slug=slug)
-    related = Project.objects.prefetch_related('gallery_images').filter(category=project.category).exclude(pk=project.pk)[:3]
-    return render(request, 'project_detail.html', {
-        'project': project,
-        'cover_image': project.get_cover_image(),
-        'gallery_images': project.get_gallery_images(),
-        'tech_list': project.get_tech_list(),
-        'related_projects': related,
-    })
 
 
 def project_list(request):
@@ -122,14 +110,14 @@ def contact_submit(request):
             )
 
             try:
-                send_mail(
-                    email_subject,
-                    email_body,
-                    getattr(settings, 'DEFAULT_FROM_EMAIL', 'no-reply@localhost'),
-                    [recipient_email],
-                    fail_silently=False,
+                email = EmailMessage(
+                    subject=email_subject,
+                    body=email_body,
+                    from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', 'no-reply@localhost'),
+                    to=[recipient_email],
                     reply_to=[message.email],
                 )
+                email.send(fail_silently=False)
             except Exception as exc:
                 logger.exception('Failed to send contact email: %s', exc)
                 return JsonResponse({'success': False, 'message': 'Message saved, but email delivery failed.'}, status=500)

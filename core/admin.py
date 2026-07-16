@@ -36,8 +36,22 @@ class ProjectCategoryFilter(admin.SimpleListFilter):
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-    fields = ('resume',)
+    list_display = ('name', 'title')
+    fieldsets = (
+        ('Hero Section', {
+            'description': 'These fields control the top (hero) section of your homepage.',
+            'fields': ('name', 'title', 'typing_texts', 'hero_tagline'),
+        }),
+        ('About Section', {
+            'fields': ('bio', 'academic_summary'),
+        }),
+        ('Photo & Resume', {
+            'fields': ('photo', 'resume'),
+        }),
+        ('Contact & Social Links', {
+            'fields': ('email', 'github_url', 'linkedin_url', 'telegram_url'),
+        }),
+    )
 
     def has_add_permission(self, request):
         return not Profile.objects.exists()
