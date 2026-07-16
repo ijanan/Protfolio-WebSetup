@@ -4,17 +4,19 @@ import mimetypes
 import os
 
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.core.mail import EmailMessage
 from django.http import FileResponse, JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
+from django.contrib.auth import get_user_model
 
 from .models import (
     Profile, Skill, Education, Experience, Project,
     BlogPost,
 )
-from .forms import ContactForm
+from .forms import ContactForm, ProfileForm
 from .github_sync import maybe_sync_github_projects
 
 
@@ -138,3 +140,27 @@ def download_resume(request):
         as_attachment=True,
         filename=f"{profile.name.replace(' ', '_')}_Resume.pdf",
     )
+
+
+@login_required
+def edit_profile(request):
+    """Custom profile editor that works independently of the Django admin.
+
+    This is a reliable alternative when the admin change form misbehaves
+    on a host. Any logged-in staff/superuser can edit the singleton Profile.
+    """
+    profile = Profile.objects.first()
+    if profile is None:
+        profile = Profile.objects.create(
+            name='Your Name', title='Your Title', bio='About you.', email='you@example.com'
+        )
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('core:edit_profile')
+    else:
+        form = ProfileForm(instance=profile)
+
+    return render(request, 'edit_profile.html', {'form': form, 'profile': profile})

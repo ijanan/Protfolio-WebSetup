@@ -2257,7 +2257,7 @@ img {
 }
 
 /* ============================================================
-   Education (left) / Experience (right) - clean card layout
+   Education (left) / Experience (right) - beautiful cards
    ============================================================ */
 .edu-exp-row {
     display: flex;
@@ -2272,68 +2272,72 @@ img {
 }
 
 .edu-exp-heading {
-    font-size: 1.6rem;
+    position: relative;
+    font-size: 1.5rem;
     font-weight: 700;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
     text-align: center;
-    color: var(--accent, #0f766e);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
+    letter-spacing: 0.3px;
 }
+
+.edu-exp-heading::after {
+    content: "";
+    display: block;
+    width: 54px;
+    height: 3px;
+    margin: 0.6rem auto 0;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--accent, #0f766e), var(--accent-3, #1d4ed8));
+}
+
+.edu-exp-col:first-child .edu-exp-heading { color: var(--accent, #0f766e); }
+.edu-exp-col:last-child  .edu-exp-heading { color: var(--accent-3, #1d4ed8); }
 
 .ee-list {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 1.4rem;
 }
 
 .ee-card {
     position: relative;
     background: var(--bg-card, #fff);
     border: 1px solid var(--border-color, #e5e7eb);
-    border-left: 4px solid var(--accent, #0f766e);
-    border-radius: 12px;
-    padding: 1.35rem 1.5rem;
-    box-shadow: var(--shadow-sm, 0 4px 14px rgba(0,0,0,0.06));
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 16px;
+    padding: 1.5rem 1.6rem 1.5rem 1.6rem;
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+    overflow: hidden;
+}
+
+.ee-card::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 5px;
+    background: linear-gradient(180deg, var(--accent, #0f766e), var(--accent-3, #1d4ed8));
 }
 
 .ee-card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-md, 0 10px 24px rgba(0,0,0,0.10));
-}
-
-.edu-exp-col:last-child .ee-card {
-    border-left-color: var(--accent-3, #1d4ed8);
-}
-
-.ee-date {
-    display: inline-block;
-    font-size: 0.82rem;
-    color: var(--text-muted, #6b7280);
-    margin-bottom: 0.4rem;
-}
-
-.ee-present {
-    color: #16a34a;
-    font-weight: 600;
+    transform: translateY(-6px);
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.12);
+    border-color: transparent;
 }
 
 .ee-current-badge {
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
-    background: rgba(22, 163, 74, 0.12);
-    color: #16a34a;
-    font-size: 0.75rem;
+    gap: 0.4rem;
+    background: linear-gradient(135deg, #16a34a, #22c55e);
+    color: #fff;
+    font-size: 0.72rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: 0.25rem 0.7rem;
+    letter-spacing: 0.6px;
+    padding: 0.3rem 0.8rem;
     border-radius: 20px;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.7rem;
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
 }
 
 .ee-current-badge .fa-circle {
@@ -2346,18 +2350,35 @@ img {
     50% { opacity: 0.35; }
 }
 
+.ee-date {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-muted, #6b7280);
+    background: rgba(15, 118, 110, 0.08);
+    padding: 0.25rem 0.7rem;
+    border-radius: 20px;
+    margin-bottom: 0.6rem;
+}
+
+.ee-present {
+    color: #16a34a;
+    font-weight: 700;
+}
+
 .ee-title {
-    font-size: 1.15rem;
+    font-size: 1.18rem;
     font-weight: 700;
     margin-bottom: 0.2rem;
     color: var(--text-primary, #111827);
 }
 
 .ee-sub {
-    font-size: 0.95rem;
-    font-weight: 500;
+    font-size: 0.98rem;
+    font-weight: 600;
     color: var(--accent, #0f766e);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.55rem;
 }
 
 .ee-field {
@@ -2369,14 +2390,14 @@ img {
 .ee-gpa {
     font-size: 0.9rem;
     color: var(--text-secondary, #4b5563);
-    margin-top: 0.3rem;
+    margin-top: 0.35rem;
 }
 
 .ee-desc {
-    font-size: 0.92rem;
+    font-size: 0.93rem;
     color: var(--text-secondary, #4b5563);
-    line-height: 1.6;
-    margin-top: 0.5rem;
+    line-height: 1.65;
+    margin-top: 0.55rem;
 }
 
 @media (max-width: 991.98px) {
