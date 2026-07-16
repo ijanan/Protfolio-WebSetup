@@ -2255,3 +2255,65 @@ img {
     opacity: 1;
     transform: none;
 }
+/* ========================================
+   Education (left) / Experience (right) split layout
+   ======================================== */
+.edu-exp-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.edu-exp-col {
+    flex: 1 1 0;
+    min-width: 300px;
+}
+
+.edu-exp-heading {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #0f766e;
+    text-align: center;
+}
+
+.timeline-split {
+    position: relative;
+    padding: 1.5rem 0;
+}
+
+.timeline-split::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, rgba(15, 118, 110, 0.25), rgba(29, 78, 216, 0.25));
+    border-radius: 3px;
+}
+
+.timeline-split .timeline-item {
+    width: 100%;
+    padding-left: 56px;
+    padding-right: 0;
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.timeline-split .timeline-item .timeline-dot {
+    left: 8px;
+    right: auto;
+}
+
+.timeline-split .timeline-content {
+    margin-left: 0;
+    text-align: left;
+}
+
+@media (max-width: 991.98px) {
+    .edu-exp-col {
+        flex-basis: 100%;
+    }
+}
