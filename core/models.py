@@ -112,8 +112,8 @@ class Project(models.Model):
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
     image = models.ImageField(upload_to='projects/', blank=True)
     tech_stack = models.CharField(max_length=500, help_text="Comma-separated, e.g. 'Python, Django, PostgreSQL'")
-    github_url = models.URLField(blank=True)
-    live_url = models.URLField(blank=True)
+    github_url = models.URLField(blank=True, help_text="Link to the source code repository (e.g. GitHub).")
+    live_url = models.URLField(blank=True, help_text="Link to the live demo / deployed app. For Power BI projects, paste your published dashboard link here (e.g. app.powerbi.com/view?r=...).")
     github_repo_id = models.BigIntegerField(
         blank=True,
         null=True,

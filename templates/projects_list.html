@@ -51,11 +51,11 @@
                         </div>
                         <p class="project-card-text">{{ project.short_description }}</p>
                         <div class="project-card-links">
-                            {% if project.github_url %}
-                            <a href="{{ project.github_url }}" target="_blank" rel="noopener" class="btn btn-sm btn-dark"><i class="fab fa-github me-1"></i>GitHub</a>
-                            {% endif %}
                             {% if project.live_url %}
-                            <a href="{{ project.live_url }}" target="_blank" rel="noopener" class="btn btn-sm btn-primary-custom"><i class="fas fa-external-link-alt me-1"></i>Live</a>
+                            <a href="{{ project.live_url }}" target="_blank" rel="noopener" class="btn btn-sm btn-primary-custom flex-fill"><i class="fas fa-external-link-alt me-1"></i>Live</a>
+                            {% endif %}
+                            {% if project.github_url %}
+                            <a href="{{ project.github_url }}" target="_blank" rel="noopener" class="btn btn-sm btn-dark flex-fill"><i class="fab fa-github me-1"></i>GitHub</a>
                             {% endif %}
                         </div>
                     </div>

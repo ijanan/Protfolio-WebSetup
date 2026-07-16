@@ -2317,3 +2317,15 @@ img {
         flex-basis: 100%;
     }
 }
+
+/* Project card action links */
+.project-card-links {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.75rem;
+}
+
+.project-card-links .btn {
+    flex: 1 1 auto;
+}
