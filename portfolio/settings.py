@@ -40,7 +40,7 @@ raw_allowed_hosts = os.environ.get(
     'localhost,127.0.0.1,anan31.pythonanywhere.com,www.anan31.pythonanywhere.com'
 )
 ALLOWED_HOSTS = [
-    "anan31.pythonanywhere.com",
+    "istiakjaman.pythonanywhere.com",
     "localhost",
     "127.0.0.1",
 ]
