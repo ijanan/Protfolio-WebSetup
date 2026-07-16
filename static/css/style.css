@@ -2258,7 +2258,7 @@ img {
 
 /* ============================================================
    Education (left) / Experience (right) two-column timeline
-   Uses a left-aligned vertical line inside each column.
+   Each column has its own left-aligned rail and dots.
    ============================================================ */
 .edu-exp-row {
     display: flex;
@@ -2269,48 +2269,44 @@ img {
 
 .edu-exp-col {
     flex: 1 1 320px;
-    min-width: 280px;
+    min-width: 260px;
 }
 
 .edu-exp-heading {
     font-size: 1.5rem;
     font-weight: 700;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
     text-align: center;
     color: var(--accent, #0f766e);
 }
 
-/* Give each column its own timeline rail on the left */
 .edu-exp-col .timeline {
-    padding: 1.5rem 0 1.5rem 0;
+    padding: 0.5rem 0 0.5rem 0;
 }
 
 .edu-exp-col .timeline::before {
-    left: 22px;
+    left: 23px;
     transform: none;
     width: 3px;
-    background: linear-gradient(180deg, rgba(15, 118, 110, 0.3), rgba(29, 78, 216, 0.35));
+    background: linear-gradient(180deg, rgba(15, 118, 110, 0.35), rgba(29, 78, 216, 0.40));
 }
 
 .edu-exp-col .timeline-item {
     width: 100%;
     left: 0 !important;
-    padding: 0 0 2rem 60px !important;
-    margin-bottom: 0;
     text-align: left !important;
+    padding: 0 0 1.75rem 64px !important;
+    margin-bottom: 0;
 }
 
-.edu-exp-col .timeline-dot {
-    left: 0 !important;
+.edu-exp-col .timeline-item .timeline-dot {
+    left: 1px !important;
     right: auto !important;
     top: 0;
 }
 
-.edu-exp-col .timeline-content {
-    margin-left: 0;
-    text-align: left;
-}
-
 @media (max-width: 991.98px) {
-    .edu-exp-col { flex-basis: 100%; }
+    .edu-exp-col {
+        flex-basis: 100%;
+    }
 }
