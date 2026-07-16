@@ -78,6 +78,17 @@ class EducationAdmin(admin.ModelAdmin):
 class ExperienceAdmin(admin.ModelAdmin):
     list_display = ('role', 'company', 'start_date', 'end_date', 'is_current')
     list_filter = ('is_current',)
+    fieldsets = (
+        ('Role', {
+            'fields': ('role', 'company', 'is_current'),
+        }),
+        ('Duration', {
+            'fields': ('start_date', 'end_date'),
+        }),
+        ('Details', {
+            'fields': ('description',),
+        }),
+    )
 
 
 class ProjectImageInline(admin.TabularInline):

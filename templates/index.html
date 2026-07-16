@@ -128,23 +128,18 @@
             <!-- LEFT COLUMN: EDUCATION -->
             <div class="col-lg-6 edu-exp-col" data-aos="fade-right">
                 <h3 class="edu-exp-heading"><i class="fas fa-graduation-cap me-2"></i>Education</h3>
-                <div class="timeline timeline-split">
+                <div class="ee-list">
                     {% for edu in education %}
-                    <div class="timeline-item timeline-left" data-aos="fade-up">
-                        <div class="timeline-dot education-dot"><i class="fas fa-graduation-cap"></i></div>
-                        <div class="timeline-content">
-                            <span class="timeline-badge badge-education">Education</span>
-                            <h4>{{ edu.degree }}</h4>
-                            <h5>{{ edu.institution }}</h5>
-                            <p class="timeline-field">{{ edu.field_of_study }}</p>
-                            <span class="timeline-date">
-                                <i class="fas fa-calendar-alt me-1"></i>
-                                {{ edu.start_date|date:"M Y" }} — {% if edu.is_current %}Present{% elif edu.end_date %}{{
-                                edu.end_date|date:"M Y" }}{% endif %}
-                            </span>
-                            {% if edu.gpa %}<p class="timeline-gpa"><strong>GPA:</strong> {{ edu.gpa }}</p>{% endif %}
-                            {% if edu.description %}<p class="mt-2">{{ edu.description }}</p>{% endif %}
-                        </div>
+                    <div class="ee-card" data-aos="fade-up">
+                        <span class="ee-date">
+                            <i class="fas fa-calendar-alt me-1"></i>
+                            {{ edu.start_date|date:"M Y" }} — {% if edu.is_current %}<span class="ee-present">Present</span>{% elif edu.end_date %}{{ edu.end_date|date:"M Y" }}{% endif %}
+                        </span>
+                        <h4 class="ee-title">{{ edu.degree }}</h4>
+                        <h5 class="ee-sub">{{ edu.institution }}</h5>
+                        <p class="ee-field">{{ edu.field_of_study }}</p>
+                        {% if edu.gpa %}<p class="ee-gpa"><strong>GPA:</strong> {{ edu.gpa }}</p>{% endif %}
+                        {% if edu.description %}<p class="ee-desc">{{ edu.description }}</p>{% endif %}
                     </div>
                     {% empty %}
                     <p class="text-center text-muted">Education entries will appear here once added via the admin panel.</p>
@@ -155,21 +150,17 @@
             <!-- RIGHT COLUMN: EXPERIENCE -->
             <div class="col-lg-6 edu-exp-col" data-aos="fade-left">
                 <h3 class="edu-exp-heading"><i class="fas fa-briefcase me-2"></i>Experience</h3>
-                <div class="timeline timeline-split">
+                <div class="ee-list">
                     {% for exp in experience %}
-                    <div class="timeline-item timeline-right" data-aos="fade-up">
-                        <div class="timeline-dot experience-dot"><i class="fas fa-briefcase"></i></div>
-                        <div class="timeline-content">
-                            <span class="timeline-badge badge-experience">Experience</span>
-                            <h4>{{ exp.role }}</h4>
-                            <h5>{{ exp.company }}</h5>
-                            <span class="timeline-date">
-                                <i class="fas fa-calendar-alt me-1"></i>
-                                {{ exp.start_date|date:"M Y" }} — {% if exp.is_current %}Present{% elif exp.end_date %}{{
-                                exp.end_date|date:"M Y" }}{% endif %}
-                            </span>
-                            <p class="mt-2">{{ exp.description|linebreaksbr }}</p>
-                        </div>
+                    <div class="ee-card" data-aos="fade-up">
+                        {% if exp.is_current %}<span class="ee-current-badge"><i class="fas fa-circle me-1"></i>Currently Working</span>{% endif %}
+                        <span class="ee-date">
+                            <i class="fas fa-calendar-alt me-1"></i>
+                            {{ exp.start_date|date:"M Y" }} — {% if exp.is_current %}<span class="ee-present">Present</span>{% elif exp.end_date %}{{ exp.end_date|date:"M Y" }}{% endif %}
+                        </span>
+                        <h4 class="ee-title">{{ exp.role }}</h4>
+                        <h5 class="ee-sub">{{ exp.company }}</h5>
+                        <p class="ee-desc">{{ exp.description|linebreaksbr }}</p>
                     </div>
                     {% empty %}
                     <p class="text-center text-muted">Experience entries will appear here once added via the admin panel.</p>

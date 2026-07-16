@@ -2257,8 +2257,7 @@ img {
 }
 
 /* ============================================================
-   Education (left) / Experience (right) two-column timeline
-   Each column has its own left-aligned rail and dots.
+   Education (left) / Experience (right) - clean card layout
    ============================================================ */
 .edu-exp-row {
     display: flex;
@@ -2273,40 +2272,113 @@ img {
 }
 
 .edu-exp-heading {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-weight: 700;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
     text-align: center;
     color: var(--accent, #0f766e);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
 }
 
-.edu-exp-col .timeline {
-    padding: 0.5rem 0 0.5rem 0;
+.ee-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
 }
 
-.edu-exp-col .timeline::before {
-    left: 23px;
-    transform: none;
-    width: 3px;
-    background: linear-gradient(180deg, rgba(15, 118, 110, 0.35), rgba(29, 78, 216, 0.40));
+.ee-card {
+    position: relative;
+    background: var(--bg-card, #fff);
+    border: 1px solid var(--border-color, #e5e7eb);
+    border-left: 4px solid var(--accent, #0f766e);
+    border-radius: 12px;
+    padding: 1.35rem 1.5rem;
+    box-shadow: var(--shadow-sm, 0 4px 14px rgba(0,0,0,0.06));
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.edu-exp-col .timeline-item {
-    width: 100%;
-    left: 0 !important;
-    text-align: left !important;
-    padding: 0 0 1.75rem 64px !important;
-    margin-bottom: 0;
+.ee-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md, 0 10px 24px rgba(0,0,0,0.10));
 }
 
-.edu-exp-col .timeline-item .timeline-dot {
-    left: 1px !important;
-    right: auto !important;
-    top: 0;
+.edu-exp-col:last-child .ee-card {
+    border-left-color: var(--accent-3, #1d4ed8);
+}
+
+.ee-date {
+    display: inline-block;
+    font-size: 0.82rem;
+    color: var(--text-muted, #6b7280);
+    margin-bottom: 0.4rem;
+}
+
+.ee-present {
+    color: #16a34a;
+    font-weight: 600;
+}
+
+.ee-current-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(22, 163, 74, 0.12);
+    color: #16a34a;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.25rem 0.7rem;
+    border-radius: 20px;
+    margin-bottom: 0.6rem;
+}
+
+.ee-current-badge .fa-circle {
+    font-size: 0.5rem;
+    animation: eePulse 1.6s infinite;
+}
+
+@keyframes eePulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+}
+
+.ee-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+    color: var(--text-primary, #111827);
+}
+
+.ee-sub {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--accent, #0f766e);
+    margin-bottom: 0.5rem;
+}
+
+.ee-field {
+    font-size: 0.9rem;
+    color: var(--text-secondary, #4b5563);
+    margin-bottom: 0.3rem;
+}
+
+.ee-gpa {
+    font-size: 0.9rem;
+    color: var(--text-secondary, #4b5563);
+    margin-top: 0.3rem;
+}
+
+.ee-desc {
+    font-size: 0.92rem;
+    color: var(--text-secondary, #4b5563);
+    line-height: 1.6;
+    margin-top: 0.5rem;
 }
 
 @media (max-width: 991.98px) {
-    .edu-exp-col {
-        flex-basis: 100%;
-    }
+    .edu-exp-col { flex-basis: 100%; }
 }
