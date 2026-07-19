@@ -310,7 +310,7 @@
             <span class="section-eyebrow">Services</span>
             <h2 class="section-title">What I Can Do For You</h2>
             <div class="section-divider"></div>
-            <p class="section-subtitle">Professional, result-driven solutions tailored to your goals</p>
+            <p class="section-subtitle">From raw data to real impact — I help businesses and individuals turn information into clear, actionable results. Explore the services below and let's build something that works for you.</p>
         </div>
         <div class="row services-grid">
             {% for service in services %}
@@ -321,7 +321,7 @@
                         <i class="{{ service.icon_class }}"></i>
                     </div>
                     <h4 class="service-title">{{ service.title }}</h4>
-                    <p class="service-desc">{{ service.description }}</p>
+                    <p class="service-desc">{{ service.description|linebreaksbr }}</p>
                     <a href="#contact" class="service-btn">{{ service.button_label }} <i class="fas fa-arrow-right ms-1"></i></a>
                 </div>
             </div>
