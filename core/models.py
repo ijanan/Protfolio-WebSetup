@@ -63,6 +63,46 @@ class Skill(models.Model):
         return f"{self.name} ({self.get_category_display()})"
 
 
+class Service(models.Model):
+    ICON_CHOICES = [
+        ('chart', 'Chart / Analytics'),
+        ('database', 'Database'),
+        ('globe', 'Web / Globe'),
+        ('brain', 'AI / Brain'),
+        ('file', 'Report / File'),
+        ('cogs', 'Automation / Cogs'),
+        ('code', 'Code'),
+        ('cloud', 'Cloud'),
+    ]
+    title = models.CharField(max_length=150)
+    description = models.TextField(help_text="Short description of the service offered.")
+    icon = models.CharField(max_length=20, choices=ICON_CHOICES, default='chart')
+    button_label = models.CharField(
+        max_length=50, default='Discuss',
+        help_text="Label for the action button, e.g. 'Discuss', 'Contact', 'Place Order'.",
+    )
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order', 'title']
+
+    def __str__(self):
+        return self.title
+
+    def icon_class(self):
+        mapping = {
+            'chart': 'fas fa-chart-line',
+            'database': 'fas fa-database',
+            'globe': 'fas fa-globe',
+            'brain': 'fas fa-brain',
+            'file': 'fas fa-file-alt',
+            'cogs': 'fas fa-cogs',
+            'code': 'fas fa-code',
+            'cloud': 'fas fa-cloud',
+        }
+        return mapping.get(self.icon, 'fas fa-star')
+
+
 class Education(models.Model):
     institution = models.CharField(max_length=200)
     degree = models.CharField(max_length=200)

@@ -274,33 +274,58 @@
             <div class="section-divider"></div>
             <p class="section-subtitle">Technologies and tools I work with</p>
         </div>
-        {% for category_name, skills_list in skill_categories.items %}
-        <div class="skill-category" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:forloop.counter0 }}00">
-            <h4 class="skill-category-title">
-                <i class="fas fa-layer-group me-2"></i>{{ category_name }}
-            </h4>
-            <div class="row">
+        <div class="row skills-grid">
+            {% for category_name, skills_list in skill_categories.items %}
+            <div class="col-lg-6" data-aos="fade-up">
+                <h4 class="skill-category-title">
+                    <i class="fas fa-layer-group me-2"></i>{{ category_name }}
+                </h4>
                 {% for skill in skills_list %}
-                <div class="col-md-6 mb-3">
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span class="skill-name">
-                                {% if skill.icon_class %}<i class="{{ skill.icon_class }} me-2"></i>{% endif %}
-                                {{ skill.name }}
-                            </span>
-                            <span class="skill-percent">{{ skill.proficiency }}%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" data-width="{{ skill.proficiency }}"></div>
-                        </div>
+                <div class="skill-item">
+                    <div class="skill-info">
+                        <span class="skill-name">
+                            {% if skill.icon_class %}<i class="{{ skill.icon_class }} me-2"></i>{% endif %}
+                            {{ skill.name }}
+                        </span>
+                        <span class="skill-percent">{{ skill.proficiency }}%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="{{ skill.proficiency }}"></div>
                     </div>
                 </div>
                 {% endfor %}
             </div>
+            {% empty %}
+            <p class="text-center text-muted w-100">Skills will be displayed here once added via the admin panel.</p>
+            {% endfor %}
         </div>
-        {% empty %}
-        <p class="text-center text-muted">Skills will be displayed here once added via the admin panel.</p>
-        {% endfor %}
+    </div>
+</section>
+
+<!-- ==================== SERVICES SECTION ==================== -->
+<section id="services" class="section-padding">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <h2 class="section-title">What I Offer</h2>
+            <div class="section-divider"></div>
+            <p class="section-subtitle">Professional services tailored to your data & web needs</p>
+        </div>
+        <div class="row services-grid">
+            {% for service in services %}
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="{{ service.icon_class }}"></i>
+                    </div>
+                    <h4 class="service-title">{{ service.title }}</h4>
+                    <p class="service-desc">{{ service.description }}</p>
+                    <a href="#contact" class="service-btn">{{ service.button_label }} <i class="fas fa-arrow-right ms-1"></i></a>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center text-muted w-100">Services will appear here once added via the admin panel.</p>
+            {% endfor %}
+        </div>
     </div>
 </section>
 

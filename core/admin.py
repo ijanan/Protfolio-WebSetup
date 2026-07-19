@@ -2,7 +2,7 @@ from django import forms
 from django.contrib import admin
 from .models import (
     Profile, Skill, Education, Experience, Project, ProjectImage,
-    BlogPost, ContactMessage,
+    BlogPost, ContactMessage, Service,
 )
 
 
@@ -66,6 +66,13 @@ class SkillAdmin(admin.ModelAdmin):
     list_filter = ('category',)
     list_editable = ('proficiency', 'order')
     ordering = ('category', 'order')
+
+
+@admin.register(Service)
+class ServiceAdmin(admin.ModelAdmin):
+    list_display = ('title', 'icon', 'button_label', 'order')
+    list_editable = ('order',)
+    ordering = ('order', 'title')
 
 
 @admin.register(Education)

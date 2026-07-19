@@ -14,7 +14,7 @@ from django.contrib.auth import get_user_model
 
 from .models import (
     Profile, Skill, Education, Experience, Project,
-    BlogPost,
+    BlogPost, Service,
 )
 from .forms import ContactForm, ProfileForm
 from .github_sync import maybe_sync_github_projects
@@ -52,12 +52,15 @@ def index(request):
         cat = skill.get_category_display()
         skill_categories.setdefault(cat, []).append(skill)
 
+    services = Service.objects.all()
+
     context = {
         'profile': profile,
         'hero_bio': (profile.hero_tagline if profile and profile.hero_tagline else HERO_BIO),
         'about_bio': (profile.bio if profile and profile.bio else ABOUT_BIO),
         'primary_title': profile.get_primary_title() if profile else 'CSE Graduate',
         'skill_categories': skill_categories,
+        'services': services,
         'education': Education.objects.all(),
         'experience': Experience.objects.all(),
         'projects': Project.objects.prefetch_related('gallery_images').all(),
