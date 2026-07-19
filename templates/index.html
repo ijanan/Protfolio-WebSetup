@@ -312,22 +312,40 @@
             <div class="section-divider"></div>
             <p class="section-subtitle">From raw data to real impact — I help businesses and individuals turn information into clear, actionable results. Explore the services below and let's build something that works for you.</p>
         </div>
-        <div class="row services-grid">
-            {% for service in services %}
-            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
-                <div class="service-card">
-                    <span class="service-number">0{{ forloop.counter }}</span>
-                    <div class="service-icon">
-                        <i class="{{ service.icon_class }}"></i>
+
+        <div class="services-layout">
+            <!-- Left: sticky highlight panel -->
+            <div class="services-aside" data-aos="fade-right">
+                <div class="services-aside-inner">
+                    <span class="services-aside-kicker">How we work</span>
+                    <h3 class="services-aside-title">Let's turn your data into decisions</h3>
+                    <p class="services-aside-text">Pick a service, tell me your goal, and I'll deliver clear, measurable results — fast.</p>
+                    <a href="#contact" class="services-aside-btn">Start a project <i class="fas fa-arrow-right ms-1"></i></a>
+                    <div class="services-aside-stats">
+                        <div><strong>20+</strong><span>Projects delivered</span></div>
+                        <div><strong>4+</strong><span>Years experience</span></div>
                     </div>
-                    <h4 class="service-title">{{ service.title }}</h4>
-                    <p class="service-desc">{{ service.description|linebreaksbr }}</p>
-                    <a href="#contact" class="service-btn">{{ service.button_label }} <i class="fas fa-arrow-right ms-1"></i></a>
                 </div>
             </div>
-            {% empty %}
-            <p class="text-center text-muted w-100">Services will appear here once added via the admin panel.</p>
-            {% endfor %}
+
+            <!-- Right: interactive service list -->
+            <div class="services-list" data-aos="fade-left">
+                {% for service in services %}
+                <div class="service-row">
+                    <div class="service-row-icon">
+                        <i class="{{ service.icon_class }}"></i>
+                    </div>
+                    <div class="service-row-body">
+                        <span class="service-row-index">0{{ forloop.counter }}</span>
+                        <h4 class="service-row-title">{{ service.title }}</h4>
+                        <p class="service-row-desc">{{ service.description|linebreaksbr }}</p>
+                    </div>
+                    <a href="#contact" class="service-row-btn">{{ service.button_label }} <i class="fas fa-arrow-right"></i></a>
+                </div>
+                {% empty %}
+                <p class="text-center text-muted w-100">Services will appear here once added via the admin panel.</p>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </section>
