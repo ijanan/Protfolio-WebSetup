@@ -120,6 +120,11 @@ class Project(models.Model):
         unique=True,
         help_text="GitHub repository ID for auto-synced projects (optional).",
     )
+    synced_from_github = models.BooleanField(
+        default=False,
+        help_text="Set automatically for projects created by GitHub sync. "
+                  "Synced projects are updated from GitHub; manually added/edited projects are never overwritten.",
+    )
     featured = models.BooleanField(default=False)
     order = models.PositiveIntegerField(default=0)
     created_at = models.DateField(auto_now_add=True)

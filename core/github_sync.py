@@ -263,6 +263,12 @@ def sync_github_projects(
 
             project = Project.objects.filter(github_repo_id=repo_id).first()
             if project:
+                # Never overwrite a project the user added/edited manually.
+                # Only auto-update projects that GitHub sync originally created.
+                if not project.synced_from_github:
+                    skipped += 1
+                    continue
+
                 changed = False
                 if project.github_url != defaults["github_url"]:
                     project.github_url = defaults["github_url"]
@@ -291,6 +297,7 @@ def sync_github_projects(
 
             Project.objects.create(
                 github_repo_id=repo_id,
+                synced_from_github=True,
                 slug=unique_slug_from_title(defaults["title"], fallback_suffix=str(repo_id)),
                 **defaults,
             )
